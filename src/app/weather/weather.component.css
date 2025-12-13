@@ -1,0 +1,45 @@
+.weather-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 80px;
+}
+
+/* Common card style */
+.weather-card {
+  width: 420px;
+  height: 200px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+/* LEFT IMAGE CARD */
+.image-card {
+  background-image: url('/assets/images/weather-bg.jpg'); /* replace image */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.temp-text {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+/* RIGHT INFO CARD */
+.info-card {
+  background: linear-gradient(to bottom, #1e3c72, #2a5298);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+}
+
+.info-card p {
+  margin: 10px 0;
+}
+    

@@ -1,0 +1,17 @@
+<div class="weather-container">
+
+  <!-- LEFT CARD -->
+  <div class="weather-card image-card">
+    <div class="temp-text">
+      {{ currentTemp }} C
+    </div>
+  </div>
+
+  <!-- RIGHT CARD -->
+  <div class="weather-card info-card">
+    <p>Expected Temperature: Day {{ weatherInfo.dayTemp }} C & Night {{ weatherInfo.nightTemp }} C</p>
+    <p>Humidity: {{ weatherInfo.humidity }}%</p>
+    <p>Wind Speed: {{ weatherInfo.windSpeed }} KM/H</p>
+  </div>
+
+</div>
