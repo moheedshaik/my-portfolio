@@ -14,7 +14,34 @@
     </nav>
 
     <button class="theme-btn">🌙 ⭐</button>
+
+    <!-- ✅ Mobile hamburger icon -->
+   <i class="fa-solid fa-bars menu-icon" (click)="menuOpen = true"></i>
   </header>
+
+
+
+  <!-- ✅ MOBILE NAV MENU -->
+<div class="mobile-menu" [class.open]="menuOpen">
+
+  <div class="mobile-header">
+    <div class="logo">SM.</div>
+    <i class="fa-solid fa-xmark close" (click)="menuOpen = false"></i>
+  </div>
+
+  <nav class="mobile-nav">
+    <a (click)="menuOpen=false"><i class="fa-solid fa-house"></i> Home</a>
+    <a (click)="menuOpen=false"><i class="fa-regular fa-user"></i> About</a>
+    <a (click)="menuOpen=false"><i class="fa-solid fa-code"></i> Projects</a>
+    <a (click)="menuOpen=false"><i class="fa-regular fa-file-lines"></i> Resume</a>
+    <a (click)="menuOpen=false"><i class="fa-solid fa-blog"></i> Blogs</a>
+  </nav>
+
+  <button class="theme-btn mobile-theme">🌙 ⭐</button>
+
+</div>
+
+
 
   <!-- HERO (THIS WAS MISSING) -->
 

@@ -182,7 +182,7 @@ html, body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 215px 177px;
+    padding: 130px 177px;
     font-family: PT Mono, monospace !important;
   }
 
@@ -333,35 +333,236 @@ html, body {
   transform: translateY(-2px);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
+
+
+/* ===== MOBILE NAV ICON ===== */
+/* ===== MOBILE MENU ===== */
+/* ===== MOBILE MENU (HALF SCREEN) ===== */
+.mobile-menu {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  height: 55vh;              /* 👈 HALF SCREEN */
+  background: #0b0616;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-100%);
+  transition: transform 0.35s ease;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.mobile-menu.open {
+  transform: translateY(0);
+}
+
+
+/* Top bar */
+.mobile-header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Navigation list */
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+/* Nav links */
+.mobile-nav a {
+  font-size: 22px;
+  color: #ffffff;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mobile-nav i {
+  font-size: 20px;
+  color: #c084fc;
+}
+
+/* Theme button */
+.mobile-theme {
+  margin-top: 30px;
+}
+
+/* Close icon */
+.close {
+  font-size: 28px;
+  cursor: pointer;
+  color: #c084fc;
+}
+
+
+.menu-icon {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  color: #c084fc;
+}
+
+@media (max-width: 900px) {
+  .nav-links,
+  .theme-btn {
+    display: none;
+  }
+
+  .menu-icon {
+    display: block;
+    margin-left: auto;
   }
 }
 
 
-
-
-
-
-
-
-
-
-
-/* RESPONSIVE */
+/* =========================
+   📱 MOBILE RESPONSIVE FIX
+   ========================= */
 @media (max-width: 900px) {
-  .about-container {
-    flex-direction: column;
-    text-align: center;
+
+  /* ---------- PAGE PADDING ---------- */
+  .page {
+    overflow-x: hidden;
   }
+
+  /* ---------- NAVBAR ---------- */
+  .navbar {
+    padding: 14px 20px;
+  }
+
+  .logo {
+    margin-left: 0;
+  }
+
+  /* ---------- HERO SECTION ---------- */
+  .hero {
+    flex-direction: column;      /* 👈 stack */
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 1.6em !important;
+  }
+
+  .hero-left {
+    max-width: 100%;
+  }
+
+  .hero-left h1 {
+    font-size: 32px;
+  }
+
+  .hero-left h2 {
+    font-size: 34px;
+  }
+
+  .hero-left h3 {
+    font-size: 22px;
+  }
+
+  .hero-right {
+    margin-top: 30px;
+  }
+
+  .hero-right img {
+    max-width: 260px;
+  }
+
+  /* ---------- ABOUT SECTION ---------- */
+  .about-section {
+    padding: 80px 20px;
+    min-height: auto;
+  }
+
+  .about-container {
+    flex-direction: column;     /* 👈 stack */
+    text-align: center;
+    gap: 50px;
+  }
+
+  .about-text {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-text h2 {
+    margin-left: 0;
+    font-size: 1.6em;
+  }
+
+  /* .about-text p {
+    font-size: 15px;
+    line-height: 1.7;
+  } */
+
+  .about-text p {
+  max-width: 92%;
+  margin: 0 auto 18px;
+  font-size: 15px;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
 
   .about-image img {
-    width: 220px;
+    width: 200px;
   }
+
+  /* ---------- CONNECT SECTION ---------- */
+  .connect-full {
+    margin: 60px 0 0 0;     /* 👈 remove desktop offset */
+    text-align: center;
+    
+  }
+
+  .connect-full h2 {
+    font-size: 30px;
+  }
+
+  .connect-full p {
+    font-size: 14px;
+  }
+
+  .social-icons {
+    gap: 16px;
+  }
+
+  /* ---------- ORDER FIX ---------- */
+.about-text {
+  order: 1;
 }
 
+.connect-full {
+  order: 2;   /* 👈 connect after text */
+}
 
+ .about-image {
+    display: none;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+}

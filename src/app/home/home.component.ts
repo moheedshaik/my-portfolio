@@ -9,8 +9,10 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  startWave = false;
 
-   startWave = false;
+   menuOpen = false;
+
 
    words: string[] = [
     'Software Developer',
@@ -32,9 +34,10 @@ export class HomeComponent {
   ngOnInit(): void {
     this.typeEffect();
 
-        setTimeout(() => {
-      this.startWave = true;
-    }, 2500); // 👈 2.5 seconds (change to 2000 or 3000 if needed)
+  this.startWave = true;  // Start waving immediately
+  setInterval(() => {
+    this.startWave = !this.startWave;  // Toggle wave every 2 seconds
+  }, 2000); // Trigger every 2 seconds
   
   }
 
