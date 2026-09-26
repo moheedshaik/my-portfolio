@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* ---------------------------------------------------------------
+   Theme tokens — warm cream + amber (bright).
+   Every component stylesheet reads these, so re-theming the whole
+   site means editing this block only.
+
+   Text colour rule: body copy is near-black, NOT brown. On a cream
+   page a brown body text has nothing to contrast against and reads
+   muddy — amber earns its brightness by being the only warm colour,
+   so it is reserved for accents.
+---------------------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --bg: #fffbf0;
+  --bg-glow: #fdeccb;
+  --bg-glass: rgba(255, 251, 240, 0.78);
+  --surface: #ffffff;
+  --border: rgba(43, 38, 33, 0.14);
+  /* Dot pattern overlay — a tint, not a speck, on cream. */
+  --dots: #eeddb4;
+
+  /* Text — warm-tinted neutrals, so they sit on cream without
+     going cold, while keeping real contrast. */
+  --text-strong: #1c1815; /* 17:1 on --bg */
+  --text: #2b2621; /* 14.5:1 — body copy */
+  --text-muted: #6f6459; /* 5.6:1 — secondary copy */
+
+  /* Accent. Two amber steps, chosen by TEXT SIZE:
+     --accent      bright, 3.4:1 — large headings, icons, rules only
+     --accent-text deeper, 4.9:1 — inline highlights and small links
+     Using --accent for 14–16px text fails contrast on cream. */
+  --accent: #c9740a;
+  --accent-text: #a55c05;
+  --accent-soft: #e8920c;
+  --accent-deep: #8a4d06;
+  --grad-from: #f59e0b;
+  --grad-to: #fbbf24;
+  --grad-dark: #fde8b0;
+}

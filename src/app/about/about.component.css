@@ -1,0 +1,182 @@
+/* Shares the global tokens in styles.css — no colours are hardcoded here. */
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+}
+
+.page {
+  min-height: 100vh;
+  background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
+  color: var(--text);
+  position: relative;
+  font-family: "PT Mono", monospace;
+}
+
+/* Dot texture, same treatment as the home page. */
+.page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.page > * {
+  position: relative;
+}
+
+/* ===== KNOW WHO I'M ===== */
+.know {
+  padding: 70px 100px 40px;
+}
+
+.know h1 {
+  margin: 0 0 40px;
+  font-size: clamp(30px, 4.2vw, 46px);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.know h1 span,
+.chips-section h2 span {
+  color: var(--accent);
+}
+
+.know-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.know-text {
+  flex: 0 0 62%;
+  box-sizing: border-box;
+  padding-right: 48px;
+  min-width: 0;
+}
+
+.know-text p {
+  margin: 0 0 22px;
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.85;
+}
+
+.highlight {
+  color: var(--accent-text);
+  font-weight: 500;
+}
+
+.hobbies {
+  list-style: none;
+  margin: 0 0 30px;
+  padding: 0 0 0 18px;
+}
+
+.hobbies li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 0;
+  font-size: clamp(16px, 1.4vw, 19px);
+}
+
+.hobbies i {
+  color: var(--accent);
+  font-size: 17px;
+}
+
+blockquote {
+  margin: 0;
+  padding-left: 18px;
+  border-left: 3px solid var(--accent);
+  font-size: clamp(15px, 1.35vw, 18px);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+blockquote cite {
+  display: block;
+  margin-top: 8px;
+  font-style: normal;
+  color: var(--accent-text);
+}
+
+.know-image {
+  flex: 0 0 38%;
+  display: flex;
+  justify-content: center;
+}
+
+.know-image img {
+  /* Free-standing illustration, not a circular avatar: this artwork is a
+     tall 659x880 portrait, so a round frame would crop most of it away. */
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+/* ===== CHIP SECTIONS ===== */
+.chips-section {
+  padding: 50px 100px;
+  text-align: center;
+}
+
+.chips-section h2 {
+  margin: 0 0 34px;
+  font-size: clamp(26px, 3.4vw, 40px);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 17px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chip:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(189, 106, 7, 0.18);
+}
+
+.chip i {
+  font-size: 23px;
+}
+
+@media (max-width: 900px) {
+  .know { padding: 50px 22px 30px; }
+  .chips-section { padding: 40px 22px; }
+
+  .know-container { flex-direction: column; gap: 34px; }
+
+  .know-text {
+    flex: 1 1 auto;
+    padding-right: 0;
+  }
+
+  .know-image { flex: 1 1 auto; }
+  .know-image img { max-width: 240px; }
+
+  .chip { font-size: 15px; padding: 10px 18px; }
+  .chip i { font-size: 20px; }
+
+}

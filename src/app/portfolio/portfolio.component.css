@@ -7,7 +7,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  background: #0b0616;
+  background: var(--bg);
   font-family: "Segoe UI", monospace;
 }
 
@@ -16,8 +16,8 @@ html, body {
 ===================== */
 .page {
   min-height: 100vh;
-  background: radial-gradient(circle at top right, #2b1b4d, #0b0616);
-  color: #ffffff;
+  background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
+  color: var(--text);
   position: relative;
 }
 
@@ -26,9 +26,9 @@ html, body {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
   background-size: 60px 60px;
-  opacity: 0.12;
+  opacity: 0.55;
   pointer-events: none;
   z-index: 0;
 }
@@ -45,14 +45,14 @@ html, body {
   justify-content: space-between;
   padding: 18px 60px;
   backdrop-filter: blur(10px);
-  background: rgba(15, 8, 30, 0.65);
+  background: var(--bg-glass);
 }
 
 /* LOGO */
 .logo {
   font-size: 26px;
   font-weight: bold;
-  color: #c084fc;
+  color: var(--accent);
 }
 
 /* NAV LINKS */
@@ -74,7 +74,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #e5e5e5;
+  color: var(--text);
   text-decoration: none;
   font-size: 15px;
   opacity: 0.9;
@@ -87,7 +87,7 @@ html, body {
 }
 
 .nav-item:hover {
-  color: #c084fc;
+  color: var(--accent-text);
   opacity: 1;
 }
 
@@ -100,7 +100,7 @@ html, body {
   transform: translateX(-50%);
   width: 0;
   height: 3px;
-  background: #c084fc;
+  background: var(--accent);
   border-radius: 10px;
   transition: width 0.25s ease;
 }
@@ -112,7 +112,7 @@ html, body {
 
 /* ACTIVE */
 .nav-item.active {
-  color: #c084fc;
+  color: var(--accent-text);
 }
 
 /* THEME BUTTON */
@@ -123,7 +123,7 @@ html, body {
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, #6d28d9, #9333ea);
+  background: linear-gradient(135deg, var(--grad-from), var(--grad-to));
   color: #fff;
 }
 
@@ -153,12 +153,12 @@ html, body {
 }
 
 .hero h1 span {
-  color: #c084fc;
+  color: var(--accent);
 }
 
 .role {
   font-size: 26px;
-  color: #c084fc;
+  color: var(--accent);
 }
 
 /* ABOUT */
@@ -168,13 +168,13 @@ html, body {
 }
 
 .about h2 span {
-  color: #c084fc;
+  color: var(--accent);
 }
 
 .about p {
   max-width: 700px;
   line-height: 1.8;
-  color: #ddd;
+  color: var(--text);
 }
 
 /* =====================

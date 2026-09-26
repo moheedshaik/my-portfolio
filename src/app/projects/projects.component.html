@@ -1,0 +1,108 @@
+<div class="page">
+
+  <app-navbar />
+
+  <section class="works">
+    <h1>My Recent <span>Works</span></h1>
+    <p class="lede">Here are a few projects I've worked on recently.</p>
+
+    <div class="grid">
+      @for (p of projects; track p.name) {
+        <article class="card" [style.--tint]="p.tint">
+
+          <!-- Laptop-framed mock screenshot, drawn rather than captured -->
+          <div class="thumb">
+            <svg viewBox="0 0 320 210" role="img" [attr.aria-label]="p.name + ' preview'">
+              <rect x="18" y="10" width="284" height="170" rx="10" fill="#1c1e24"/>
+              <rect x="27" y="19" width="266" height="152" rx="4" fill="#0f1116"/>
+
+              @switch (p.layout) {
+                @case ('dashboard') {
+                  <rect x="27" y="19" width="266" height="18" fill="#171a20"/>
+                  <circle cx="38" cy="28" r="3" fill="var(--tint)"/>
+                  <rect x="48" y="25" width="40" height="6" rx="3" fill="#2e3340"/>
+                  <rect x="35" y="47" width="60" height="34" rx="5" fill="#171a20"/>
+                  <rect x="103" y="47" width="60" height="34" rx="5" fill="#171a20"/>
+                  <rect x="171" y="47" width="60" height="34" rx="5" fill="#171a20"/>
+                  <rect x="239" y="47" width="46" height="34" rx="5" fill="var(--tint)" opacity=".28"/>
+                  <rect x="42" y="56" width="26" height="5" rx="2.5" fill="var(--tint)"/>
+                  <rect x="110" y="56" width="26" height="5" rx="2.5" fill="#39404f"/>
+                  <rect x="178" y="56" width="26" height="5" rx="2.5" fill="#39404f"/>
+                  <rect x="35" y="91" width="196" height="70" rx="5" fill="#171a20"/>
+                  <path d="M45 148l26-16 24 9 26-24 24 12 26-30 24 16 26-22" fill="none" stroke="var(--tint)" stroke-width="2.5" stroke-linejoin="round"/>
+                  <rect x="239" y="91" width="46" height="70" rx="5" fill="#171a20"/>
+                  <rect x="247" y="101" width="30" height="5" rx="2.5" fill="#39404f"/>
+                  <rect x="247" y="113" width="22" height="5" rx="2.5" fill="#39404f"/>
+                  <rect x="247" y="125" width="26" height="5" rx="2.5" fill="var(--tint)" opacity=".7"/>
+                }
+                @case ('editor') {
+                  <rect x="27" y="19" width="20" height="152" fill="#15181e"/>
+                  <rect x="47" y="19" width="54" height="152" fill="#12151a"/>
+                  <rect x="33" y="30" width="8" height="8" rx="2" fill="var(--tint)"/>
+                  <rect x="33" y="46" width="8" height="8" rx="2" fill="#2e3340"/>
+                  <rect x="33" y="62" width="8" height="8" rx="2" fill="#2e3340"/>
+                  <rect x="55" y="32" width="34" height="5" rx="2.5" fill="#2e3340"/>
+                  <rect x="55" y="46" width="28" height="5" rx="2.5" fill="var(--tint)"/>
+                  <rect x="55" y="60" width="32" height="5" rx="2.5" fill="#2e3340"/>
+                  <rect x="55" y="74" width="24" height="5" rx="2.5" fill="#2e3340"/>
+                  <rect x="112" y="32" width="30" height="6" rx="3" fill="var(--tint)"/>
+                  <rect x="112" y="50" width="70" height="5" rx="2.5" fill="#39404f"/>
+                  <rect x="122" y="64" width="90" height="5" rx="2.5" fill="#4b5365"/>
+                  <rect x="122" y="78" width="60" height="5" rx="2.5" fill="var(--tint)" opacity=".75"/>
+                  <rect x="132" y="92" width="104" height="5" rx="2.5" fill="#39404f"/>
+                  <rect x="132" y="106" width="76" height="5" rx="2.5" fill="#39404f"/>
+                  <rect x="122" y="120" width="52" height="5" rx="2.5" fill="var(--tint)" opacity=".75"/>
+                  <rect x="112" y="134" width="40" height="5" rx="2.5" fill="#39404f"/>
+                  <rect x="112" y="150" width="7" height="10" fill="var(--tint)"/>
+                }
+                @case ('grid') {
+                  <rect x="27" y="19" width="266" height="18" fill="#171a20"/>
+                  <rect x="38" y="25" width="44" height="6" rx="3" fill="var(--tint)"/>
+                  @for (c of [0,1,2,3,4,5,6,7]; track c) {
+                    <rect [attr.x]="37 + (c % 4) * 64" [attr.y]="50 + (c < 4 ? 0 : 62)" width="52" height="50" rx="6" fill="#171a20"/>
+                    <rect [attr.x]="46 + (c % 4) * 64" [attr.y]="62 + (c < 4 ? 0 : 62)" width="22" height="22" rx="6" fill="var(--tint)" [attr.opacity]="c % 3 === 0 ? '.85' : '.3'"/>
+                    <rect [attr.x]="46 + (c % 4) * 64" [attr.y]="90 + (c < 4 ? 0 : 62)" width="34" height="4" rx="2" fill="#39404f"/>
+                  }
+                }
+                @default {
+                  <rect x="27" y="19" width="266" height="18" fill="#171a20"/>
+                  <rect x="38" y="25" width="44" height="6" rx="3" fill="var(--tint)"/>
+                  @for (col of [0,1,2]; track col) {
+                    <rect [attr.x]="37 + col * 86" y="48" width="74" height="114" rx="6" fill="#171a20"/>
+                    <rect [attr.x]="45 + col * 86" y="56" width="34" height="5" rx="2.5" fill="var(--tint)"/>
+                    <rect [attr.x]="45 + col * 86" y="70" width="58" height="22" rx="4" fill="#20242c"/>
+                    <rect [attr.x]="45 + col * 86" y="98" width="58" height="22" rx="4" fill="#20242c"/>
+                    @if (col === 0) {
+                      <rect [attr.x]="45 + col * 86" y="126" width="58" height="22" rx="4" fill="var(--tint)" opacity=".3"/>
+                    }
+                  }
+                }
+              }
+
+              <!-- laptop base -->
+              <path d="M6 184h308l-8 14H14z" fill="#2b2f38"/>
+              <rect x="132" y="188" width="56" height="4" rx="2" fill="#191c22"/>
+            </svg>
+          </div>
+
+          <h2>{{ p.name }}</h2>
+          <p class="stack">{{ p.stack }}</p>
+          <p class="desc">{{ p.description }}</p>
+
+          <div class="actions">
+            <a class="btn" [href]="p.github" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            @if (p.demo) {
+              <a class="btn ghost" [href]="p.demo" target="_blank" rel="noopener">
+                <i class="fa-solid fa-display"></i> Demo
+              </a>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+</div>
+
+<app-footer />

@@ -2,15 +2,15 @@
 html, body {
   margin: 0;
   height: 100%;
-  background: #0b0616;
+  background: var(--bg);
   font-family: "Segoe UI", sans-serif;
 }
 
 /* PAGE */
 .page {
   min-height: 100vh;
-  background: radial-gradient(circle at top right, #2b1b4d, #0b0616);
-  color: #fff;
+  background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
+  color: var(--text);
   position: relative;
 }
 
@@ -19,9 +19,9 @@ html, body {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(#fff 1px, transparent 1px);
+  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
   background-size: 60px 60px;
-  opacity: 0.12;
+  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -35,7 +35,7 @@ html, body {
   align-items: center;
   padding: 18px 60px;
   backdrop-filter: blur(10px);
-  background: rgba(15, 8, 30, 0.65);
+  background: var(--bg-glass);
 }
 
 /* push nav + button to the right */
@@ -49,7 +49,7 @@ html, body {
 .logo {
   font-size: 26px;
   font-weight: bold;
-  color: #c084fc;
+  color: var(--accent);
   margin-left: 59px;
 }
 
@@ -59,7 +59,7 @@ html, body {
   align-items: center;    /* keeps icon & text aligned */
   gap: 15px;               /* 2–3px space */
   
-  color: #ddd;
+  color: var(--text);
   text-decoration: none;
   position: relative;
   padding-bottom: 6px;
@@ -74,7 +74,7 @@ html, body {
   left: 50%;
   width: 0;
   height: 3px;
-  background: #c084fc;
+  background: var(--accent);
   transform: translateX(-50%);
   transition: width 0.25s ease;
   cursor: pointer;
@@ -90,7 +90,7 @@ html, body {
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  background: linear-gradient(135deg, #6d28d9, #9333ea);
+  background: linear-gradient(135deg, var(--grad-from), var(--grad-to));
   color: #fff;
   margin-left: 16px; 
   margin-right: 68px
@@ -162,12 +162,12 @@ html, body {
 }
 
 .hero-left h2 span {
-  color: #c084fc;
+  color: var(--accent);
 }
 
 .hero-left h3 {
   font-size: 32px;
-  color: #c084fc;
+  color: var(--accent);
   margin-top: 10px;
 }
 
@@ -209,18 +209,18 @@ html, body {
   }
 
   .about-text h2 span {
-    color: #c084fc;
+    color: var(--accent);
   }
 
   .about-text p {
     font-size: 16px;
     line-height: 1.8;
-    color: #ddd;
+    color: var(--text);
     margin-bottom: 22px;
   }
 
   .highlight {
-    color: #c084fc;
+    color: var(--accent-text);
     font-weight: 500;
   }
 
@@ -229,7 +229,7 @@ html, body {
     width: 260px;
     border-radius: 50%;
     padding: 12px;
-    background: radial-gradient(circle, #6d28d9, #3b0764);
+    background: radial-gradient(circle, var(--grad-from), var(--grad-dark));
   }
 
 
@@ -256,7 +256,7 @@ html, body {
 }
 
 .connect-full p {
-  color: #ccc;
+  color: var(--text-muted);
   margin-bottom: 25px;
 }
 
@@ -270,8 +270,8 @@ html, body {
 .social-icons a {
   width: 40px;
   height: 40px;
-  background: #ffffff;
-  color: #7c3aed; /* purple */
+  background: var(--surface);
+  color: var(--accent-deep);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -282,7 +282,7 @@ html, body {
 }
 
 .social-icons a:hover {
-  background: #7c3aed;
+  background: var(--accent-deep);
   color: #ffffff;
   transform: translateY(-5px);
 }
@@ -295,10 +295,10 @@ html, body {
 /* FOOTER */
 
 .footer {
-  background: #0b0617;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg);
+  border-top: 1px solid var(--border);
   padding: 15px 20px;
-  color: #d1d1d1;
+  color: var(--text);
   font-size: 14px;
 }
 
@@ -313,7 +313,7 @@ html, body {
 
 .footer-left span,
 .footer-center span {
-  color: #b983ff;
+  color: var(--accent-text);
   font-weight: 500;
 }
 
@@ -323,13 +323,13 @@ html, body {
 }
 
 .footer-right a {
-  color: #ffffff;
+  color: var(--text);
   font-size: 16px;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .footer-right a:hover {
-  color: #b983ff;
+  color: var(--accent-soft);
   transform: translateY(-2px);
 }
 
@@ -345,7 +345,7 @@ html, body {
   top: 0;
 
   height: 55vh;              /* 👈 HALF SCREEN */
-  background: #0b0616;
+  background: var(--bg);
   z-index: 9999;
 
   display: flex;
@@ -387,7 +387,7 @@ html, body {
 /* Nav links */
 .mobile-nav a {
   font-size: 22px;
-  color: #ffffff;
+  color: var(--text);
   text-decoration: none;
 
   display: flex;
@@ -397,7 +397,7 @@ html, body {
 
 .mobile-nav i {
   font-size: 20px;
-  color: #c084fc;
+  color: var(--accent);
 }
 
 /* Theme button */
@@ -409,7 +409,7 @@ html, body {
 .close {
   font-size: 28px;
   cursor: pointer;
-  color: #c084fc;
+  color: var(--accent);
 }
 
 
@@ -417,7 +417,7 @@ html, body {
   display: none;
   font-size: 26px;
   cursor: pointer;
-  color: #c084fc;
+  color: var(--accent);
 }
 
 @media (max-width: 900px) {

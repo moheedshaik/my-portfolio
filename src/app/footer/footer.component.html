@@ -1,0 +1,19 @@
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      Designed and Developed by <span>Shaik Moheed</span>
+    </div>
+
+    <div class="footer-center">
+      Copyright © {{ year }} <span>Shaik Moheed</span>
+    </div>
+
+    <div class="footer-right">
+      @for (s of socials; track s.label) {
+        <a [href]="s.url" target="_blank" rel="noopener" [attr.aria-label]="s.label">
+          <i [class]="s.icon"></i>
+        </a>
+      }
+    </div>
+  </div>
+</footer>

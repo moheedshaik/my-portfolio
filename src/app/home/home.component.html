@@ -1,47 +1,6 @@
 <div class="page">
 
-  <!-- NAVBAR -->
-
-  <header class="navbar">
-    <div class="logo">SM.</div>
-
-    <nav class="nav-links">
-      <a class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
-      <a class="nav-item"><i class="fa-regular fa-user"></i> About</a>
-      <a class="nav-item"><i class="fa-solid fa-code"></i> Projects</a>
-      <a class="nav-item"><i class="fa-regular fa-file-lines"></i> Resume</a>
-      <a class="nav-item"><i class="fa-solid fa-blog"></i> Blogs</a>
-    </nav>
-
-    <button class="theme-btn">🌙 ⭐</button>
-
-    <!-- ✅ Mobile hamburger icon -->
-   <i class="fa-solid fa-bars menu-icon" (click)="menuOpen = true"></i>
-  </header>
-
-
-
-  <!-- ✅ MOBILE NAV MENU -->
-<div class="mobile-menu" [class.open]="menuOpen">
-
-  <div class="mobile-header">
-    <div class="logo">SM.</div>
-    <i class="fa-solid fa-xmark close" (click)="menuOpen = false"></i>
-  </div>
-
-  <nav class="mobile-nav">
-    <a (click)="menuOpen=false"><i class="fa-solid fa-house"></i> Home</a>
-    <a (click)="menuOpen=false"><i class="fa-regular fa-user"></i> About</a>
-    <a (click)="menuOpen=false"><i class="fa-solid fa-code"></i> Projects</a>
-    <a (click)="menuOpen=false"><i class="fa-regular fa-file-lines"></i> Resume</a>
-    <a (click)="menuOpen=false"><i class="fa-solid fa-blog"></i> Blogs</a>
-  </nav>
-
-  <button class="theme-btn mobile-theme">🌙 ⭐</button>
-
-</div>
-
-
+  <app-navbar />
 
   <!-- HERO (THIS WAS MISSING) -->
 
@@ -88,7 +47,7 @@
         <span class="highlight">JavaScript</span>,
         <span class="highlight">Angular</span>,
         <span class="highlight">Node.js</span>
-        and <span class="highlight">.NET</span>
+        and <span class="highlight">Java</span>
       </p>
 
       <p>
@@ -114,34 +73,9 @@
 
 
       
-      <!-- CONNECT SECTION -->
 
-   <!-- <div class="connect-full">
-      <h2>Find Me On</h2>
-      <p>
-        Feel free to <span class="highlight">connect</span> with me.
-      </p>
 
-      <div class="social-icons">
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div> -->
 
-<div class="connect-full">
-  <h2>Find Me On</h2>
-  <p>
-    Feel free to <span class="highlight">connect</span> with me.
-  </p>
-
-  <div class="social-icons">
-    <a href="#"><i class="fab fa-github"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-  </div>
-</div>
 
 
 
@@ -156,43 +90,32 @@
 
   </div>
 </section>
+
+<!-- CONNECT SECTION — full width, its own screen -->
+<section class="connect-full">
+  <h2>Find Me On</h2>
+  <p>
+  Feel free to <span class="highlight">connect</span> with me.
+  </p>
+  <div class="social-icons">
+  <a href="https://github.com/moheedshaik" target="_blank" rel="noopener" aria-label="GitHub">
+    <i class="fab fa-github"></i>
+  </a>
+  <a href="https://x.com" target="_blank" rel="noopener" aria-label="X">
+    <i class="fab fa-x-twitter"></i>
+  </a>
+  <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+  <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  </div>
+</section>
  </div>
 
 
 
 
 
-  <!-- FOOTER -->
-
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-left">
-      Designed and Developed by <span>Shaik Moheed</span>
-    </div>
-
-    <div class="footer-center">
-      Copyright © 2025 <span>Shaik Moheed</span>
-    </div>
-
-    <div class="footer-right">
-      <a href="https://github.com/yourusername" target="_blank" aria-label="GitHub">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://twitter.com/yourusername" target="_blank" aria-label="Twitter">
-        <i class="fab fa-twitter"></i>
-      </a>
-      <a href="https://linkedin.com/in/yourusername" target="_blank" aria-label="LinkedIn">
-        <i class="fab fa-linkedin-in"></i>
-      </a>
-      <a href="https://instagram.com/yourusername" target="_blank" aria-label="Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-    </div>
-  </div>
-</footer>
-
-
-
-
-
-</div>
+<app-footer />

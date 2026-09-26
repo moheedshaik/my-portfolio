@@ -1,0 +1,61 @@
+<div class="page">
+
+  <app-navbar />
+
+  <!-- KNOW WHO I AM -->
+  <section class="know">
+    <h1>Know Who <span>I'M</span></h1>
+
+    <div class="know-container">
+      <div class="know-text">
+        <p>
+          Hi everyone! I'm <span class="highlight">Shaik Moheed</span>.
+          I'm currently working as a <span class="highlight">Software Engineer</span>
+          at <span class="highlight">Certinal</span>.
+          I hold a <span class="highlight">Bachelor of Engineering (B.E.)</span>
+          in <span class="highlight">Electronics and Communication Engineering (ECE)</span>.
+        </p>
+
+        <p>Outside of coding, I love engaging in activities that keep me creative and inspired:</p>
+
+        <ul class="hobbies">
+          @for (h of hobbies; track h.text) {
+            <li><i class="fa-solid fa-hand-point-right"></i> {{ h.text }} {{ h.emoji }}</li>
+          }
+        </ul>
+
+        <blockquote>
+          "Build it simple, build it solid, build it to last."
+          <cite>— Moheed</cite>
+        </blockquote>
+      </div>
+
+      <div class="know-image">
+        <img src="assets/images/about-monitoring.svg" alt="Monitoring application data on a dashboard">
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFESSIONAL SKILLSET -->
+  <section class="chips-section">
+    <h2>Professional <span>Skillset</span></h2>
+    <div class="chips">
+      @for (s of skills; track s.name) {
+        <span class="chip"><i [class]="s.icon"></i>{{ s.name }}</span>
+      }
+    </div>
+  </section>
+
+  <!-- TOOLS I USE -->
+  <section class="chips-section">
+    <h2>Tools <span>I use</span></h2>
+    <div class="chips">
+      @for (t of tools; track t.name) {
+        <span class="chip"><i [class]="t.icon"></i>{{ t.name }}</span>
+      }
+    </div>
+  </section>
+
+</div>
+
+<app-footer />

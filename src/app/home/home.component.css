@@ -2,15 +2,15 @@
 html, body {
   margin: 0;
   height: 100%;
-  background: #0b0616;
+  background: var(--bg);
   font-family: "Segoe UI", sans-serif;
 }
 
 /* PAGE */
 .page {
   min-height: 100vh;
-  background: radial-gradient(circle at top right, #2b1b4d, #0b0616);
-  color: #fff;
+  background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
+  color: var(--text);
   position: relative;
 }
 
@@ -19,81 +19,10 @@ html, body {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(#fff 1px, transparent 1px);
+  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
   background-size: 60px 60px;
-  opacity: 0.12;
+  opacity: 0.55;
   pointer-events: none;
-}
-
-
-
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  padding: 18px 60px;
-  backdrop-filter: blur(10px);
-  background: rgba(15, 8, 30, 0.65);
-}
-
-/* push nav + button to the right */
-.nav-links {
-  display: flex;
-  gap: 40px;
-  margin-left: auto;      
-  font-size: 20px;
-}
-
-.logo {
-  font-size: 26px;
-  font-weight: bold;
-  color: #c084fc;
-  margin-left: 59px;
-}
-
-
-.nav-item {
-  display: flex;          /* ✅ REQUIRED */
-  align-items: center;    /* keeps icon & text aligned */
-  gap: 15px;               /* 2–3px space */
-  
-  color: #ddd;
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 6px;
-}
-
-
-
-.nav-item::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 3px;
-  background: #c084fc;
-  transform: translateX(-50%);
-  transition: width 0.25s ease;
-  cursor: pointer;
-}
-
-
-.nav-item:hover::after {
-  width: 88px;
-}
-
-.theme-btn {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(135deg, #6d28d9, #9333ea);
-  color: #fff;
-  margin-left: 16px; 
-  margin-right: 68px
 }
 
 
@@ -101,11 +30,13 @@ html, body {
 /* HERO (fills screen so background shows) */
 
 .hero {
-  min-height: 40vh;
+  /* Fills the viewport below the sticky navbar so nothing from the
+     About section shows on first paint. */
+  min-height: calc(100vh - 78px);
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;   /* 👈 change this */
-  padding: 60px 189px 0;      /* top padding controls gap */
+  align-items: center;
+  padding: 0 189px;
   font-size: 2.4em !important;
   font-family: PT Mono, monospace !important
 }
@@ -162,12 +93,12 @@ html, body {
 }
 
 .hero-left h2 span {
-  color: #c084fc;
+  color: var(--accent);
 }
 
 .hero-left h3 {
   font-size: 32px;
-  color: #c084fc;
+  color: var(--accent);
   margin-top: 10px;
 }
 
@@ -179,84 +110,97 @@ html, body {
 
 /* ABOUT SECTION */
   .about-section {
-    min-height: 100vh;
+    /* Content-sized, not a forced full screen — the hero already owns the
+       first viewport, so this only needs breathing room, not 100vh of it. */
     display: flex;
     align-items: center;
-    padding: 130px 177px;
+    padding: 90px 100px;
     font-family: PT Mono, monospace !important;
   }
 
   .about-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 80px;
+    /* No gap: the 70/30 split is exact, and .about-text carries its
+       own right padding so the copy never touches the illustration. */
+    gap: 0;
     width: 100%;
   }
 
-  /* LEFT TEXT */
+  /* LEFT TEXT — 70 / 30 split with the illustration. */
   .about-text {
-    max-width: 600px;
+    flex: 0 0 70%;
+    min-width: 0;
+    /* border-box so the padding sits inside the 70%, not on top of it
+       (this project has no global box-sizing reset). */
+    box-sizing: border-box;
+    padding-right: 48px;
   }
 
   .about-text h2 {
-      font-size: 2em;
+      font-size: clamp(30px, 4.2vw, 46px);
       margin-bottom: 30px;
       letter-spacing: 1px;
       font-weight: 500;
-      margin-left: 56px;
-
+      text-align: center;
   }
 
   .about-text h2 span {
-    color: #c084fc;
+    color: var(--accent);
   }
 
   .about-text p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #ddd;
+    font-size: clamp(16px, 1.5vw, 20px);
+    line-height: 1.85;
+    color: var(--text);
     margin-bottom: 22px;
   }
 
   .highlight {
-    color: #c084fc;
+    color: var(--accent-text);
     font-weight: 500;
   }
 
   /* RIGHT IMAGE */
+  .about-image {
+    flex: 0 0 30%;
+    display: flex;
+    justify-content: center;
+  }
+
   .about-image img {
-    width: 260px;
+    width: 100%;
+    max-width: 320px;
     border-radius: 50%;
     padding: 12px;
-    background: radial-gradient(circle, #6d28d9, #3b0764);
+    background: radial-gradient(circle, var(--grad-from), var(--grad-dark));
   }
 
 
 
 /* CONNECT SECTION */
-/* .connect-full {
-  width: 100%;
-  text-align: center;
-  margin: 122px 0 -96px 220px;
-} */
-
-
-
 .connect-full {
+  /* Its own full-width section now, so it needs no left offset to look
+     centred, and gets enough height to arrive as a separate screen. */
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  margin: 122px 0 -96px 220px;
+  padding: 90px 20px 110px;
+  box-sizing: border-box;
+  /* Was inherited from .about-section before this block was lifted out. */
+  font-family: "PT Mono", monospace;
 }
 
 .connect-full h2 {
-  font-size: 40px;
+  font-size: clamp(30px, 3.6vw, 44px);
   margin-bottom: 10px;
-  margin-left: 0px;
 }
 
 .connect-full p {
-  color: #ccc;
+  color: var(--text-muted);
   margin-bottom: 25px;
 }
 
@@ -270,8 +214,8 @@ html, body {
 .social-icons a {
   width: 40px;
   height: 40px;
-  background: #ffffff;
-  color: #7c3aed; /* purple */
+  background: var(--surface);
+  color: var(--accent-deep);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -282,7 +226,7 @@ html, body {
 }
 
 .social-icons a:hover {
-  background: #7c3aed;
+  background: var(--accent-deep);
   color: #ffffff;
   transform: translateY(-5px);
 }
@@ -292,147 +236,9 @@ html, body {
 
 
 
-/* FOOTER */
-
-.footer {
-  background: #0b0617;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 15px 20px;
-  color: #d1d1d1;
-  font-size: 14px;
-}
-
-.footer-container {
-  max-width: 1200px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.footer-left span,
-.footer-center span {
-  color: #b983ff;
-  font-weight: 500;
-}
-
-.footer-right {
-  display: flex;
-  gap: 18px;
-}
-
-.footer-right a {
-  color: #ffffff;
-  font-size: 16px;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.footer-right a:hover {
-  color: #b983ff;
-  transform: translateY(-2px);
-}
-
-
-
 /* ===== MOBILE NAV ICON ===== */
 /* ===== MOBILE MENU ===== */
 /* ===== MOBILE MENU (HALF SCREEN) ===== */
-.mobile-menu {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-
-  height: 55vh;              /* 👈 HALF SCREEN */
-  background: #0b0616;
-  z-index: 9999;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  transform: translateY(-100%);
-  transition: transform 0.35s ease;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-.mobile-menu.open {
-  transform: translateY(0);
-}
-
-
-/* Top bar */
-.mobile-header {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Navigation list */
-.mobile-nav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
-}
-
-/* Nav links */
-.mobile-nav a {
-  font-size: 22px;
-  color: #ffffff;
-  text-decoration: none;
-
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.mobile-nav i {
-  font-size: 20px;
-  color: #c084fc;
-}
-
-/* Theme button */
-.mobile-theme {
-  margin-top: 30px;
-}
-
-/* Close icon */
-.close {
-  font-size: 28px;
-  cursor: pointer;
-  color: #c084fc;
-}
-
-
-.menu-icon {
-  display: none;
-  font-size: 26px;
-  cursor: pointer;
-  color: #c084fc;
-}
-
-@media (max-width: 900px) {
-  .nav-links,
-  .theme-btn {
-    display: none;
-  }
-
-  .menu-icon {
-    display: block;
-    margin-left: auto;
-  }
-}
-
-
 /* =========================
    📱 MOBILE RESPONSIVE FIX
    ========================= */
@@ -441,15 +247,6 @@ html, body {
   /* ---------- PAGE PADDING ---------- */
   .page {
     overflow-x: hidden;
-  }
-
-  /* ---------- NAVBAR ---------- */
-  .navbar {
-    padding: 14px 20px;
-  }
-
-  .logo {
-    margin-left: 0;
   }
 
   /* ---------- HERO SECTION ---------- */
@@ -528,13 +325,7 @@ html, body {
 
   /* ---------- CONNECT SECTION ---------- */
   .connect-full {
-    margin: 60px 0 0 0;     /* 👈 remove desktop offset */
-    text-align: center;
-    
-  }
-
-  .connect-full h2 {
-    font-size: 30px;
+    padding: 70px 20px;
   }
 
   .connect-full p {
@@ -550,19 +341,8 @@ html, body {
   order: 1;
 }
 
-.connect-full {
-  order: 2;   /* 👈 connect after text */
-}
-
  .about-image {
     display: none;
-  }
-
-  /* ---------- FOOTER ---------- */
-  .footer-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
   }
 
 }
