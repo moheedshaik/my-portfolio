@@ -1,84 +1,134 @@
-<div class="page">
+<div class="app">
 
-  <app-navbar />
+  <!-- Decorative: animated aurora field + fine grid, behind everything. -->
+  <div class="backdrop" aria-hidden="true">
+    <span class="aurora a1"></span>
+    <span class="aurora a2"></span>
+    <span class="aurora a3"></span>
+    <span class="grid"></span>
+  </div>
 
-  <section class="explorer">
+  <header class="topbar">
+    <a class="brand" routerLink="/projects/countries">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2"/>
+        <ellipse cx="16" cy="16" rx="5.5" ry="13" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M3.6 11.5h24.8M3.6 20.5h24.8" stroke="currentColor" stroke-width="1.6"/>
+      </svg>
+      <span class="brand-name">Atlas</span>
+    </a>
 
-    <header class="head">
-      <h1>Country <span>Explorer</span></h1>
-      <p class="lede">
-        Every country on record, with population figures pulled live from the World Bank.
-      </p>
-    </header>
+    <div class="topbar-right">
+      <span class="pill">
+        <span class="dot"></span>
+        Live · World Bank
+      </span>
+      <a class="back" routerLink="/projects">Back to portfolio</a>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Global population index</span>
+        <h1>Every country<br><em>on record.</em></h1>
+        <p>
+          Population, capital, region and income level for
+          {{ countries().length || 217 }} countries, streamed straight from the
+          World Bank.
+        </p>
+
+        <ul class="stats">
+          <li><strong>{{ countries().length || 217 }}</strong><span>Countries</span></li>
+          <li><strong>{{ regionCount() || 7 }}</strong><span>Regions</span></li>
+          <li><strong>2025</strong><span>Latest figures</span></li>
+        </ul>
+      </div>
+
+      <div class="globe-wrap">
+        <div class="globe-ring" aria-hidden="true"></div>
+        <canvas
+          #globeCanvas
+          class="globe"
+          role="img"
+          [attr.aria-label]="'Globe centred on ' + (selected()?.name || 'the world')"></canvas>
+      </div>
+    </section>
 
     @if (loading()) {
       <div class="split">
-        <ul class="list" aria-busy="true" aria-label="Loading countries">
+        <div class="panel list-wrap" aria-busy="true" aria-label="Loading countries">
           @for (row of skeletonRows; track $index) {
-            <li class="skeleton-row"><span class="shimmer"></span></li>
+            <div class="skeleton-row"><span class="shimmer"></span></div>
           }
-        </ul>
-        <aside class="detail skeleton-detail">
+        </div>
+        <div class="panel detail">
           <span class="shimmer block"></span>
-        </aside>
+        </div>
       </div>
     } @else {
       <div class="split">
 
-        <ul class="list" aria-label="Countries">
-          @for (country of countries(); track country.code) {
-            <li>
-              <button
-                type="button"
-                class="row"
-                [class.active]="country.code === selected()?.code"
-                [attr.aria-current]="country.code === selected()?.code"
-                (click)="select(country)">
-                <img
-                  class="row-flag"
-                  [src]="flag(country, 40)"
-                  alt=""
-                  width="28"
-                  height="21"
-                  loading="lazy" />
-                <span class="row-name">{{ country.name }}</span>
-                <span class="row-code">{{ country.code }}</span>
-              </button>
-            </li>
-          }
-        </ul>
+        <div class="panel list-wrap">
+          <p class="panel-label">
+            All countries
+            <span class="count">{{ countries().length }}</span>
+          </p>
+          <ul class="list" aria-label="Countries">
+            @for (country of countries(); track country.code) {
+              <li>
+                <button
+                  type="button"
+                  class="row"
+                  [class.active]="country.code === selected()?.code"
+                  [attr.aria-current]="country.code === selected()?.code"
+                  (click)="select(country)">
+                  <img
+                    class="row-flag"
+                    [src]="flag(country, 40)"
+                    alt=""
+                    width="26"
+                    height="20"
+                    loading="lazy" />
+                  <span class="row-name">{{ country.name }}</span>
+                  <span class="row-code">{{ country.code }}</span>
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
 
         @if (selected(); as country) {
-          <aside class="detail" aria-live="polite">
-            <!-- Not lazy: this one is always in view, and lazily swapping it
-                 blanks the panel for a beat every time you pick a country. -->
-            <img
-              class="detail-flag"
-              [src]="flag(country, 320)"
-              [alt]="'Flag of ' + country.name" />
+          <article class="panel detail" aria-live="polite">
 
-            <h2>{{ country.name }}</h2>
-            <p class="detail-code">{{ country.code }} · {{ country.iso2 }}</p>
+            <header class="detail-head">
+              <img
+                class="detail-flag"
+                [src]="flag(country, 320)"
+                [alt]="'Flag of ' + country.name" />
+              <div>
+                <h2>{{ country.name }}</h2>
+                <p class="detail-code">{{ country.code }} · {{ country.iso2 }}</p>
+                <span class="tag">{{ country.region }}</span>
+              </div>
+            </header>
 
             <dl class="facts">
-              <div class="fact">
-                <dt>Capital</dt>
-                <dd>{{ country.capital || '—' }}</dd>
-              </div>
-              <div class="fact">
-                <dt>Region</dt>
-                <dd>{{ country.region }}</dd>
-              </div>
-              <div class="fact">
+              <div class="fact wide">
                 <dt>Population</dt>
-                <dd>
+                <dd class="big">
                   @if (country.population !== null) {
                     {{ country.population | number }}
-                    <small>({{ country.populationYear }})</small>
+                    <small>{{ country.populationYear }}</small>
                   } @else {
                     —
                   }
                 </dd>
+              </div>
+              <div class="fact">
+                <dt>Capital</dt>
+                <dd>{{ country.capital || '—' }}</dd>
               </div>
               <div class="fact">
                 <dt>Income level</dt>
@@ -86,19 +136,25 @@
               </div>
               <div class="fact">
                 <dt>Coordinates</dt>
-                <dd>{{ country.latitude || '—' }}, {{ country.longitude || '—' }}</dd>
+                <dd class="mono">{{ country.latitude || '—' }}, {{ country.longitude || '—' }}</dd>
               </div>
             </dl>
 
-            <p class="source">Source: World Bank Open Data</p>
-          </aside>
+            <p class="detail-foot">
+              Indicator <span class="mono">SP.POP.TOTL</span> · most recent year available
+            </p>
+
+          </article>
         }
 
       </div>
     }
 
-  </section>
+  </main>
 
-  <app-footer />
+  <footer class="foot">
+    <span>Data: World Bank Open Data · Flags: flagcdn.com · Globe: cobe</span>
+    <a routerLink="/projects">Shaik Moheed</a>
+  </footer>
 
 </div>

@@ -26,6 +26,14 @@
 />
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+  <!-- Used only by the Atlas demo, which styles itself as a separate product.
+       Declaring them here costs other pages one cached stylesheet; the font
+       files themselves download only where something actually uses them. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 </head>
 <body>
   <app-root></app-root>

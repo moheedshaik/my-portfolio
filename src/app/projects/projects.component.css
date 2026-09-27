@@ -51,20 +51,53 @@ h1 span {
   text-align: left;
 }
 
+/* Hovering is tracked on this wrapper, which never moves, and the 6px of
+   top padding is the room the card lifts into. Putting the lift on the card
+   itself slides it out from under a stationary cursor, so :hover drops and
+   flickers; the card can never leave the slot, so the hover stays steady. */
+.card-slot {
+  box-sizing: border-box;
+  padding-top: 6px;
+}
+
 .card {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 18px 18px 22px;
+  /* Anchors the demo link's stretched overlay below. */
+  position: relative;
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
 }
 
-.card:hover {
+/* The demo link covers the whole card, so clicking anywhere opens it. */
+.stretched::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+}
+
+/* Left unpositioned above, the other buttons would fall under that overlay. */
+.btn:not(.stretched) {
+  position: relative;
+  z-index: 1;
+}
+
+.card-slot:hover .card {
   transform: translateY(-6px);
   border-color: var(--tint);
   box-shadow: 0 16px 34px rgba(43, 38, 33, 0.14);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-slot:hover .card {
+    transform: none;
+  }
 }
 
 .thumb {
@@ -119,12 +152,11 @@ h2 {
   font-size: 14px;
   text-decoration: none;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .btn:hover {
   opacity: 0.88;
-  transform: translateY(-2px);
 }
 
 .btn.ghost {

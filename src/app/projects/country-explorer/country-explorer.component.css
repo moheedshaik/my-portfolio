@@ -1,110 +1,431 @@
-/* Uses the global tokens in styles.css — see projects.component.css for the
-   shared page shell this mirrors. */
+/* Space Grotesk and JetBrains Mono are linked from index.html — an @import here
+   gets inlined into this component's stylesheet at build time, one @font-face
+   per unicode subset, which blows the component-style budget. Only this page
+   declares them, so no other route downloads the font files.
 
-.page {
-  min-height: 100vh;
-  background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
-  color: var(--text);
-  position: relative;
-  font-family: "PT Mono", monospace;
+   Deliberately self-contained: this demo is presented as its own product, so it
+   defines its own tokens instead of reading the portfolio's cream/amber theme
+   in styles.css. Nothing here should reference the global palette. */
+:host {
+  --bg: #f4f6ff;
+  --glass: rgba(255, 255, 255, 0.66);
+  --glass-solid: #ffffff;
+  --line: rgba(79, 70, 229, 0.14);
+  --line-soft: rgba(79, 70, 229, 0.08);
+  --text: #0b1020;
+  --muted: #566188;
+  --indigo: #4f46e5;
+  --violet: #9333ea;
+  --cyan: #0891b2;
+  --accent-soft: #ecefff;
+  --glow: 0 18px 50px -18px rgba(79, 70, 229, 0.42);
+
+  --display: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  display: block;
+  background: var(--bg);
 }
 
-.page::before {
-  content: "";
+.app {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- animated backdrop ---- */
+
+.backdrop {
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
-  background-size: 60px 60px;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
   opacity: 0.55;
-  pointer-events: none;
 }
 
-.page > * {
-  position: relative;
+.a1 {
+  width: 46vw;
+  height: 46vw;
+  top: -14vw;
+  left: -8vw;
+  background: radial-gradient(circle, #6366f1, transparent 68%);
+  animation: drift1 22s ease-in-out infinite alternate;
 }
 
-.explorer {
-  padding: 70px 100px 90px;
+.a2 {
+  width: 40vw;
+  height: 40vw;
+  top: -10vw;
+  right: -6vw;
+  background: radial-gradient(circle, #22d3ee, transparent 68%);
+  animation: drift2 26s ease-in-out infinite alternate;
 }
 
-.head {
-  text-align: center;
+.a3 {
+  width: 38vw;
+  height: 38vw;
+  top: 38vw;
+  left: 42vw;
+  background: radial-gradient(circle, #c084fc, transparent 70%);
+  animation: drift3 30s ease-in-out infinite alternate;
 }
 
-h1 {
+@keyframes drift1 {
+  to {
+    transform: translate3d(7vw, 5vw, 0) scale(1.12);
+  }
+}
+
+@keyframes drift2 {
+  to {
+    transform: translate3d(-6vw, 7vw, 0) scale(1.15);
+  }
+}
+
+@keyframes drift3 {
+  to {
+    transform: translate3d(-8vw, -6vw, 0) scale(1.1);
+  }
+}
+
+/* Fine technical grid over the aurora, faded out toward the bottom. */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(79, 70, 229, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 70, 229, 0.07) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(180deg, #000 0%, #000 42%, transparent 92%);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 42%, transparent 92%);
+}
+
+/* ---- top bar ---- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 32px;
+  min-height: 66px;
+  background: rgba(244, 246, 255, 0.72);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  color: var(--indigo);
+}
+
+.brand-name {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  color: #3730a3;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.3px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+  animation: ping 2.2s ease-out infinite;
+}
+
+@keyframes ping {
+  70%,
+  100% {
+    box-shadow: 0 0 0 7px rgba(34, 197, 94, 0);
+  }
+}
+
+.back {
+  color: var(--muted);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.back:hover {
+  color: var(--indigo);
+}
+
+/* ---- hero ---- */
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 58px 32px 76px;
+  box-sizing: border-box;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 46px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 16px;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.66);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--indigo);
+}
+
+.hero h1 {
   margin: 0 0 14px;
-  font-size: clamp(30px, 4.2vw, 46px);
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-family: var(--display);
+  font-size: clamp(34px, 5vw, 60px);
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1.02;
 }
 
-h1 span {
-  color: var(--accent);
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(100deg, var(--indigo), var(--violet) 48%, var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.lede {
-  margin: 0 0 54px;
-  font-size: clamp(15px, 1.4vw, 19px);
-  color: var(--text-muted);
+.hero p {
+  margin: 0;
+  max-width: 48ch;
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.62;
+  color: var(--muted);
 }
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 36px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stats strong {
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  background: linear-gradient(100deg, var(--indigo), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stats span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---- globe ---- */
+
+.globe-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 360px;
+  height: 360px;
+}
+
+.globe-ring {
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(79, 70, 229, 0.45) 40deg,
+    transparent 120deg,
+    transparent 240deg,
+    rgba(8, 145, 178, 0.4) 300deg,
+    transparent 360deg
+  );
+  mask-image: radial-gradient(circle, transparent 66%, #000 68%, #000 70%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle, transparent 66%, #000 68%, #000 70%, transparent 72%);
+  animation: spin 14s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.globe {
+  width: 100%;
+  height: 100%;
+  /* cobe renders a transparent-backed sphere; the drop shadow grounds it. */
+  filter: drop-shadow(0 22px 42px rgba(79, 70, 229, 0.3));
+}
+
+/* ---- layout ---- */
 
 .split {
   display: grid;
-  grid-template-columns: minmax(280px, 360px) 1fr;
-  gap: 30px;
-  align-items: start;
+  grid-template-columns: minmax(260px, 340px) 1fr;
+  gap: 22px;
+  /* Stretch, so the detail panel matches the list's height instead of ending
+     halfway up and leaving the row looking unfinished. */
+  align-items: stretch;
+}
+
+.panel {
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  box-shadow: var(--glow);
 }
 
 /* ---- list ---- */
 
+.list-wrap {
+  overflow: hidden;
+}
+
+.panel-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--line-soft);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.count {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--indigo);
+}
+
 .list {
   margin: 0;
-  padding: 6px;
+  padding: 8px;
   list-style: none;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 18px;
-  /* Tall enough to show the list is long, short enough that the detail panel
-     stays beside it rather than being pushed off-screen. */
-  max-height: 620px;
+  /* Long enough to read as a full dataset, short enough to keep the detail
+     panel beside it rather than pushed off-screen. */
+  max-height: 560px;
   overflow-y: auto;
 }
 
 .row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   width: 100%;
-  padding: 10px 12px;
+  padding: 9px 11px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 11px;
   background: none;
   color: var(--text);
   font: inherit;
-  font-size: 15px;
+  font-size: 14.5px;
   text-align: left;
   cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease;
 }
 
 .row:hover {
-  background: var(--bg-glow);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .row.active {
-  background: var(--accent);
-  color: #fff;
+  background: linear-gradient(100deg, var(--indigo), var(--violet));
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 10px 22px -10px rgba(79, 70, 229, 0.85);
 }
 
 .row:focus-visible {
-  outline: 2px solid var(--accent-text);
+  outline: 2px solid var(--indigo);
   outline-offset: -2px;
 }
 
 .row-flag {
   flex: none;
-  border-radius: 2px;
+  border-radius: 3px;
   object-fit: cover;
-  box-shadow: 0 0 0 1px var(--border);
+  box-shadow: 0 0 0 1px var(--line);
 }
 
 .row-name {
@@ -116,106 +437,157 @@ h1 span {
 
 .row-code {
   flex: none;
-  font-size: 12px;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
 }
 
 .row.active .row-code {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 /* ---- detail ---- */
 
 .detail {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 18px;
-  padding: 30px 34px 26px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 32px 26px;
+}
+
+.detail-head {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line-soft);
 }
 
 /* Height is pinned rather than width: flag ratios vary (Switzerland is square,
-   Nepal is not even a rectangle), so sizing by width would shift everything
-   below the flag each time you pick a different country. */
+   Nepal is not even a rectangle), so sizing by width would shift the heading
+   each time you pick a different country. */
 .detail-flag {
-  height: 100px;
+  height: 86px;
   width: auto;
-  max-width: 200px;
-  border-radius: 6px;
-  box-shadow: 0 0 0 1px var(--border);
+  max-width: 150px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.9), 0 12px 26px rgba(11, 16, 32, 0.18);
 }
 
 .detail h2 {
-  margin: 20px 0 4px;
-  font-size: clamp(24px, 2.6vw, 32px);
-  font-weight: 500;
-  color: var(--text-strong);
+  margin: 0 0 4px;
+  font-family: var(--display);
+  font-size: clamp(26px, 2.8vw, 36px);
+  font-weight: 700;
+  letter-spacing: -1.1px;
 }
 
 .detail-code {
-  margin: 0 0 26px;
-  font-size: 13px;
-  letter-spacing: 1px;
+  margin: 0 0 11px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: var(--accent-text);
+  color: var(--indigo);
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 12.5px;
+  color: var(--muted);
 }
 
 .facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px 30px;
-  margin: 0;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px 30px;
+  margin: 26px 0 0;
+}
+
+.fact.wide {
+  grid-column: 1 / -1;
 }
 
 .fact dt {
-  margin-bottom: 5px;
-  font-size: 12px;
-  letter-spacing: 1px;
+  margin-bottom: 7px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 1.3px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--muted);
 }
 
 .fact dd {
   margin: 0;
   font-size: 17px;
-  color: var(--text-strong);
+  font-weight: 500;
+}
+
+.fact dd.big {
+  font-family: var(--display);
+  font-size: clamp(30px, 3.4vw, 42px);
+  font-weight: 700;
+  letter-spacing: -1.4px;
+  background: linear-gradient(100deg, var(--indigo), var(--violet) 60%, var(--cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.mono {
+  font-family: var(--mono);
+}
+
+.fact dd.mono {
+  font-size: 14.5px;
+  font-weight: 400;
 }
 
 .fact dd small {
-  font-size: 13px;
-  color: var(--text-muted);
+  margin-left: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  -webkit-text-fill-color: var(--muted);
 }
 
-.source {
-  margin: 28px 0 0;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  font-size: 13px;
-  color: var(--text-muted);
+.detail-foot {
+  /* Pins the source line to the bottom of the stretched panel. */
+  margin-top: auto;
+  padding-top: 22px;
+  font-size: 11.5px;
+  letter-spacing: 0.3px;
+  color: var(--muted);
 }
 
 /* ---- loading ---- */
 
 .skeleton-row {
-  padding: 10px 12px;
+  padding: 9px 11px;
 }
 
 .shimmer {
   display: block;
-  height: 21px;
-  border-radius: 6px;
-  background: linear-gradient(90deg, var(--bg-glow), var(--bg), var(--bg-glow));
+  height: 20px;
+  border-radius: 7px;
+  background: linear-gradient(
+    90deg,
+    rgba(79, 70, 229, 0.08),
+    rgba(255, 255, 255, 0.85),
+    rgba(79, 70, 229, 0.08)
+  );
   background-size: 200% 100%;
   animation: shimmer 1.3s linear infinite;
 }
 
 .shimmer.block {
-  height: 380px;
-  border-radius: 12px;
-}
-
-.skeleton-detail {
-  padding: 20px;
+  height: 340px;
+  border-radius: 14px;
 }
 
 @keyframes shimmer {
@@ -224,29 +596,101 @@ h1 span {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .shimmer {
-    animation: none;
-  }
+/* ---- footer ---- */
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 20px 32px;
+  border-top: 1px solid var(--line-soft);
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.foot a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.foot a:hover {
+  color: var(--indigo);
 }
 
 /* ---- responsive ---- */
 
+@media (max-width: 1040px) {
+  .hero {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .globe-wrap {
+    width: 280px;
+    height: 280px;
+    margin-inline: auto;
+  }
+}
+
 @media (max-width: 900px) {
-  .explorer {
-    padding: 48px 20px 60px;
+  .topbar {
+    padding: 0 18px;
+  }
+
+  .main {
+    padding: 34px 18px 52px;
   }
 
   .split {
     grid-template-columns: 1fr;
   }
 
-  /* Stacked, a 620px list would bury the detail panel below the fold. */
+  /* Stacked, a 560px list would bury the detail panel below the fold. */
   .list {
-    max-height: 320px;
+    max-height: 300px;
+  }
+
+  .stats {
+    gap: 24px;
   }
 
   .detail {
-    padding: 24px 22px 20px;
+    padding: 22px 20px 20px;
+  }
+
+  .detail-head {
+    gap: 16px;
+  }
+
+  .detail-flag {
+    height: 62px;
+  }
+
+  .foot {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 540px) {
+  .pill {
+    display: none;
+  }
+
+  .globe-wrap {
+    width: 230px;
+    height: 230px;
+  }
+}
+
+/* The aurora drift, ring spin and status ping are pure decoration. */
+@media (prefers-reduced-motion: reduce) {
+  .aurora,
+  .globe-ring,
+  .dot,
+  .shimmer {
+    animation: none;
   }
 }

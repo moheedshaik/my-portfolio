@@ -8,6 +8,8 @@
 
     <div class="grid">
       @for (p of projects; track p.name) {
+        <!-- The slot is the hover target and never moves; the card lifts inside it. -->
+        <div class="card-slot">
         <article class="card" [style.--tint]="p.tint">
 
           <!-- Laptop-framed mock screenshot, drawn rather than captured -->
@@ -90,24 +92,22 @@
           <p class="desc">{{ p.description }}</p>
 
           <div class="actions">
-            <a class="btn" [href]="p.github" target="_blank" rel="noopener">
-              <i class="fab fa-github"></i> GitHub
-            </a>
+            @if (p.github) {
+              <a class="btn" [href]="p.github" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            }
             @if (p.demo) {
-              <!-- Demos built into this site route in-app; only off-site ones
-                   get a new tab. -->
-              @if (p.demo.startsWith('/')) {
-                <a class="btn ghost" [routerLink]="p.demo">
-                  <i class="fa-solid fa-display"></i> Demo
-                </a>
-              } @else {
-                <a class="btn ghost" [href]="p.demo" target="_blank" rel="noopener">
-                  <i class="fa-solid fa-display"></i> Demo
-                </a>
-              }
+              <!-- `stretched` makes this link cover the whole card, so clicking
+                   anywhere on the card opens the demo. Keeps one anchor instead
+                   of nesting the buttons inside a card-wide link. -->
+              <a class="btn ghost stretched" [href]="p.demo" target="_blank" rel="noopener">
+                <i class="fa-solid fa-display"></i> Demo
+              </a>
             }
           </div>
         </article>
+        </div>
       }
     </div>
   </section>
