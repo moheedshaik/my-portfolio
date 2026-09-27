@@ -1,5 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Browser default is body { margin: 8px }. This must live here, not in a
+   component stylesheet — Angular scopes those, so `html, body` selectors
+   compile to `body[_ngcontent-…]` and silently never match. */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg);
+  font-family: "Segoe UI", sans-serif;
+}
+
 /* ---------------------------------------------------------------
    Theme tokens — warm cream + amber (bright).
    Every component stylesheet reads these, so re-theming the whole
@@ -19,6 +31,15 @@
   --border: rgba(43, 38, 33, 0.14);
   /* Dot pattern overlay — a tint, not a speck, on cream. */
   --dots: #eeddb4;
+
+  /* Chrome — header and footer. A deliberately different surface from the
+     cream body, so they read as distinct bands instead of blending in. */
+  --chrome: #2b2621;
+  /* Header and footer share one height so they stay visually matched. */
+  --chrome-h: 72px;
+  --chrome-glass: rgba(43, 38, 33, 0.92);
+  --chrome-text: #f0e9dc;
+  --chrome-muted: #b9ad99;
 
   /* Text — warm-tinted neutrals, so they sit on cream without
      going cold, while keeping real contrast. */

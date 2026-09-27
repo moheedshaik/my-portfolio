@@ -1,8 +1,12 @@
 .footer {
-  background: var(--bg);
-  border-top: 1px solid var(--border);
-  padding: 22px 40px;
-  color: var(--text);
+  background: var(--chrome);
+  border-top: none;
+  display: flex;
+  align-items: center;
+  min-height: var(--chrome-h);
+  box-sizing: border-box;
+  padding: 0 40px;
+  color: var(--chrome-text);
   font-size: 19px;
   font-family: "PT Mono", monospace;
 }
@@ -23,7 +27,7 @@
 
 .footer-left span,
 .footer-center span {
-  color: var(--accent-text);
+  color: var(--accent-soft);
   font-weight: 500;
 }
 
@@ -34,7 +38,7 @@
 }
 
 .footer-right a {
-  color: var(--text);
+  color: var(--chrome-muted);
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -45,8 +49,17 @@
 
 @media (max-width: 900px) {
   .footer {
-    padding: 18px 20px;
-    font-size: 16px;
+    /* Stacks to three rows on narrow screens, so it grows past --chrome-h. */
+    min-height: auto;
+    padding: 18px 16px;
+    /* Fluid so the credit line stays on ONE line down to ~320px phones:
+       it needs ~365px at 16px, but only ~335px is available at 375px. */
+    font-size: clamp(11px, 3.7vw, 16px);
+  }
+
+  .footer-left,
+  .footer-center {
+    white-space: nowrap;
   }
 
   .footer-container {

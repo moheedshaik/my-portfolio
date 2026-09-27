@@ -1,0 +1,104 @@
+<div class="page">
+
+  <app-navbar />
+
+  <section class="explorer">
+
+    <header class="head">
+      <h1>Country <span>Explorer</span></h1>
+      <p class="lede">
+        Every country on record, with population figures pulled live from the World Bank.
+      </p>
+    </header>
+
+    @if (loading()) {
+      <div class="split">
+        <ul class="list" aria-busy="true" aria-label="Loading countries">
+          @for (row of skeletonRows; track $index) {
+            <li class="skeleton-row"><span class="shimmer"></span></li>
+          }
+        </ul>
+        <aside class="detail skeleton-detail">
+          <span class="shimmer block"></span>
+        </aside>
+      </div>
+    } @else {
+      <div class="split">
+
+        <ul class="list" aria-label="Countries">
+          @for (country of countries(); track country.code) {
+            <li>
+              <button
+                type="button"
+                class="row"
+                [class.active]="country.code === selected()?.code"
+                [attr.aria-current]="country.code === selected()?.code"
+                (click)="select(country)">
+                <img
+                  class="row-flag"
+                  [src]="flag(country, 40)"
+                  alt=""
+                  width="28"
+                  height="21"
+                  loading="lazy" />
+                <span class="row-name">{{ country.name }}</span>
+                <span class="row-code">{{ country.code }}</span>
+              </button>
+            </li>
+          }
+        </ul>
+
+        @if (selected(); as country) {
+          <aside class="detail" aria-live="polite">
+            <!-- Not lazy: this one is always in view, and lazily swapping it
+                 blanks the panel for a beat every time you pick a country. -->
+            <img
+              class="detail-flag"
+              [src]="flag(country, 320)"
+              [alt]="'Flag of ' + country.name" />
+
+            <h2>{{ country.name }}</h2>
+            <p class="detail-code">{{ country.code }} · {{ country.iso2 }}</p>
+
+            <dl class="facts">
+              <div class="fact">
+                <dt>Capital</dt>
+                <dd>{{ country.capital || '—' }}</dd>
+              </div>
+              <div class="fact">
+                <dt>Region</dt>
+                <dd>{{ country.region }}</dd>
+              </div>
+              <div class="fact">
+                <dt>Population</dt>
+                <dd>
+                  @if (country.population !== null) {
+                    {{ country.population | number }}
+                    <small>({{ country.populationYear }})</small>
+                  } @else {
+                    —
+                  }
+                </dd>
+              </div>
+              <div class="fact">
+                <dt>Income level</dt>
+                <dd>{{ country.incomeLevel || '—' }}</dd>
+              </div>
+              <div class="fact">
+                <dt>Coordinates</dt>
+                <dd>{{ country.latitude || '—' }}, {{ country.longitude || '—' }}</dd>
+              </div>
+            </dl>
+
+            <p class="source">Source: World Bank Open Data</p>
+          </aside>
+        }
+
+      </div>
+    }
+
+  </section>
+
+  <app-footer />
+
+</div>

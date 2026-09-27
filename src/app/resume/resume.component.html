@@ -1,0 +1,87 @@
+<div class="page">
+
+  <app-navbar />
+
+  <section class="resume">
+    <h1>My <span>Resume</span></h1>
+
+    <a class="cv-btn" [href]="cvUrl" download>
+      <i class="fa-solid fa-download"></i> Download CV
+    </a>
+
+    <div class="sheet">
+
+      <header class="sheet-head">
+        <div>
+          <h2>Shaik Moheed</h2>
+          <p class="role">Software Engineer</p>
+        </div>
+        <ul class="contact">
+          @for (c of contact; track c.text) {
+            <li><i [class]="c.icon"></i>{{ c.text }}</li>
+          }
+        </ul>
+      </header>
+
+      <section class="block">
+        <h3><i class="fa-solid fa-briefcase"></i> Experience</h3>
+        @for (job of experience; track job.company) {
+          <article class="entry">
+            <div class="entry-head">
+              <span class="entry-title">{{ job.role }} <em>· {{ job.company }}</em></span>
+              <span class="period">{{ job.period }}</span>
+            </div>
+            <ul>
+              @for (pt of job.points; track pt) {
+                <li>{{ pt }}</li>
+              }
+            </ul>
+          </article>
+        }
+      </section>
+
+      <section class="block">
+        <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
+        @for (ed of education; track ed.degree) {
+          <article class="entry">
+            <div class="entry-head">
+              <span class="entry-title">{{ ed.degree }} <em>· {{ ed.field }}</em></span>
+              <span class="period">{{ ed.period }}</span>
+            </div>
+            <p class="school">{{ ed.school }}</p>
+          </article>
+        }
+      </section>
+
+      <section class="block">
+        <h3><i class="fa-solid fa-code"></i> Skills</h3>
+        @for (g of skillGroups; track g.title) {
+          <div class="skill-row">
+            <span class="skill-label">{{ g.title }}</span>
+            <div class="chips">
+              @for (s of g.items; track s) {
+                <span class="chip">{{ s }}</span>
+              }
+            </div>
+          </div>
+        }
+      </section>
+
+      <section class="block">
+        <h3><i class="fa-solid fa-award"></i> Certifications</h3>
+        <ul class="plain">
+          @for (c of certifications; track c) {
+            <li>{{ c }}</li>
+          }
+        </ul>
+      </section>
+
+    </div>
+
+    <a class="cv-btn" [href]="cvUrl" download>
+      <i class="fa-solid fa-download"></i> Download CV
+    </a>
+  </section>
+</div>
+
+<app-footer />

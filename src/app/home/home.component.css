@@ -1,11 +1,4 @@
 /* RESET */
-html, body {
-  margin: 0;
-  height: 100%;
-  background: var(--bg);
-  font-family: "Segoe UI", sans-serif;
-}
-
 /* PAGE */
 .page {
   min-height: 100vh;
@@ -32,7 +25,7 @@ html, body {
 .hero {
   /* Fills the viewport below the sticky navbar so nothing from the
      About section shows on first paint. */
-  min-height: calc(100vh - 78px);
+  min-height: calc(100vh - var(--chrome-h));
   display: flex;
   justify-content: space-between;
   align-items: center;

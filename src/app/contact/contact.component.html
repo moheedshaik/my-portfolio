@@ -1,0 +1,61 @@
+<div class="page">
+
+  <app-navbar />
+
+  <section class="contact">
+    <h1>Get In <span>Touch</span></h1>
+    <p class="lede">
+      Have a role, a project, or just want to say hello? My inbox is always open.
+    </p>
+
+    <div class="layout">
+
+      <aside class="details">
+        <h2>Contact details</h2>
+
+        @for (d of details; track d.label) {
+          <div class="row">
+            <span class="ico"><i [class]="d.icon"></i></span>
+            <span class="meta">
+              <em>{{ d.label }}</em>
+              @if (d.url) {
+                <a [href]="d.url" target="_blank" rel="noopener">{{ d.value }}</a>
+              } @else {
+                <span>{{ d.value }}</span>
+              }
+            </span>
+          </div>
+        }
+
+        <div class="status"><i></i> Open to opportunities</div>
+      </aside>
+
+      <form class="form" (submit)="send(nameEl.value, emailEl.value, msgEl.value); $event.preventDefault()">
+        <h2>Send a message</h2>
+
+        <label>
+          <span>Your name</span>
+          <input #nameEl type="text" name="name" placeholder="Jane Doe" required>
+        </label>
+
+        <label>
+          <span>Your email</span>
+          <input #emailEl type="email" name="email" placeholder="jane@company.com" required>
+        </label>
+
+        <label>
+          <span>Message</span>
+          <textarea #msgEl name="message" rows="6" placeholder="Tell me a bit about it…" required></textarea>
+        </label>
+
+        <button type="submit">
+          <i class="fa-solid fa-paper-plane"></i> Send message
+        </button>
+
+        <p class="note">Opens in your mail app with the message ready to send.</p>
+      </form>
+    </div>
+  </section>
+</div>
+
+<app-footer />

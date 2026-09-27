@@ -6,9 +6,12 @@
   z-index: 20;
   display: flex;
   align-items: center;
-  padding: 18px 60px;
+  min-height: var(--chrome-h);
+  box-sizing: border-box;
+  padding: 0 60px;
   backdrop-filter: blur(10px);
-  background: var(--bg-glass);
+  background: var(--chrome-glass);
+  border-bottom: 1px solid rgba(240, 233, 220, 0.12);
 }
 
 /* push nav + button to the right */
@@ -22,7 +25,7 @@
 .logo {
   font-size: 26px;
   font-weight: bold;
-  color: var(--accent);
+  color: var(--accent-soft);
   margin-left: 59px;
 }
 
@@ -30,7 +33,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  color: var(--text);
+  color: var(--chrome-text);
   text-decoration: none;
   position: relative;
   padding-bottom: 6px;
@@ -44,7 +47,7 @@
   left: 50%;
   width: 0;
   height: 3px;
-  background: var(--accent);
+  background: var(--accent-soft);
   transform: translateX(-50%);
   transition: width 0.25s ease;
   cursor: pointer;
@@ -55,17 +58,6 @@
   width: 88px;
 }
 
-.theme-btn {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(135deg, var(--grad-from), var(--grad-to));
-  color: #fff;
-  margin-left: 16px;
-  margin-right: 68px;
-}
-
 /* ===== MOBILE MENU (HALF SCREEN) ===== */
 .mobile-menu {
   position: fixed;
@@ -73,7 +65,7 @@
   right: 0;
   top: 0;
   height: 55vh;
-  background: var(--bg);
+  background: var(--chrome);
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -108,7 +100,7 @@
 
 .mobile-nav a {
   font-size: 22px;
-  color: var(--text);
+  color: var(--chrome-text);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -118,29 +110,24 @@
 
 .mobile-nav i {
   font-size: 20px;
-  color: var(--accent);
-}
-
-.mobile-theme {
-  margin-top: 30px;
+  color: var(--accent-soft);
 }
 
 .close {
   font-size: 28px;
   cursor: pointer;
-  color: var(--accent);
+  color: var(--accent-soft);
 }
 
 .menu-icon {
   display: none;
   font-size: 26px;
   cursor: pointer;
-  color: var(--accent);
+  color: var(--accent-soft);
 }
 
 @media (max-width: 900px) {
-  .nav-links,
-  .theme-btn {
+  .nav-links {
     display: none;
   }
 
@@ -150,7 +137,7 @@
   }
 
   .navbar {
-    padding: 14px 20px;
+    padding: 0 20px;
   }
 
   .logo {

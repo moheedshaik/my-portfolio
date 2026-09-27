@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent],
+  imports: [RouterLink, NavbarComponent, FooterComponent],
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.css'],
 })
@@ -15,6 +16,16 @@ export class ProjectsComponent {
    * `layout` picks which mock UI the thumbnail draws.
    */
   readonly projects = [
+    {
+      name: 'Country Explorer',
+      stack: 'Angular · RxJS · World Bank API',
+      tint: '#2563eb',
+      layout: 'grid',
+      description:
+        'Browse 217 countries with live population data. Joins two World Bank endpoints with forkJoin, filters out the regional aggregates they mix into the results, and falls back to a cached snapshot if the API is down.',
+      github: 'https://github.com/moheedshaik/my-portfolio',
+      demo: '/projects/countries',
+    },
     {
       name: 'Consent Manager',
       stack: 'Angular · Java · PostgreSQL',

@@ -94,9 +94,17 @@
               <i class="fab fa-github"></i> GitHub
             </a>
             @if (p.demo) {
-              <a class="btn ghost" [href]="p.demo" target="_blank" rel="noopener">
-                <i class="fa-solid fa-display"></i> Demo
-              </a>
+              <!-- Demos built into this site route in-app; only off-site ones
+                   get a new tab. -->
+              @if (p.demo.startsWith('/')) {
+                <a class="btn ghost" [routerLink]="p.demo">
+                  <i class="fa-solid fa-display"></i> Demo
+                </a>
+              } @else {
+                <a class="btn ghost" [href]="p.demo" target="_blank" rel="noopener">
+                  <i class="fa-solid fa-display"></i> Demo
+                </a>
+              }
             }
           </div>
         </article>

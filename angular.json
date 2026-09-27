@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "test-project": {
+    "my-portfolio": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/test-project",
+            "outputPath": "dist/my-portfolio",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -21,8 +21,7 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-               "src/assets",
-              "src/favicon.ico",
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
@@ -36,21 +35,21 @@
           "configurations": {
             "production": {
               "budgets": [
-            {
-              "type": "bundle",
-              "maximumWarning": "2mb",
-              "maximumError": "5mb"
-            },
-            {
-              "type": "initial",
-              "maximumWarning": "1mb",
-              "maximumError": "2mb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "6kb",
-              "maximumError": "7kb"
-            }
+                {
+                  "type": "bundle",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "7kb"
+                }
               ],
               "outputHashing": "all"
             },
@@ -66,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "test-project:build:production"
+              "buildTarget": "my-portfolio:build:production"
             },
             "development": {
-              "buildTarget": "test-project:build:development"
+              "buildTarget": "my-portfolio:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -87,7 +86,6 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/assets",
-              "src/favicon.ico",
               {
                 "glob": "**/*",
                 "input": "public"

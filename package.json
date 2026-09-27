@@ -1,11 +1,11 @@
 {
-  "name": "test-project",
+  "name": "my-portfolio",
   "version": "0.0.0",
   "scripts": {
-  "start": "ng serve",
-  "build": "ng build",
-  "build:gh": "ng build --configuration production --base-href /my-portfolio/",
-  "deploy": "npx gh-pages -d dist/test-project/browser"
+    "start": "ng serve",
+    "build": "ng build",
+    "build:gh": "ng build --configuration production --base-href /my-portfolio/",
+    "deploy": "npx gh-pages -d dist/my-portfolio/browser"
   },
   "private": true,
   "dependencies": {
