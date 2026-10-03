@@ -2,32 +2,64 @@
   <a class="logo" routerLink="/">SM<b aria-hidden="true">&#9651;</b></a>
 
   <nav class="nav-links">
-    <a class="nav-item" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a class="nav-item" routerLink="/about" routerLinkActive="active">About</a>
+    <!-- These two share a route, so which is lit comes from the scroll
+         position the component tracks, not from routerLinkActive. -->
+    <a class="nav-item" routerLink="/" [class.active]="homeActive()">Home</a>
+    <!-- A section on Home, not a page of its own: this scrolls there rather
+         than navigating away. anchorScrolling is already on in app.config. -->
+    <a class="nav-item" routerLink="/" fragment="about" [class.active]="aboutActive()">About</a>
     <a class="nav-item" routerLink="/projects" routerLinkActive="active">Projects</a>
     <a class="nav-item" routerLink="/resume" routerLinkActive="active">Resume</a>
     <a class="nav-item" routerLink="/contact" routerLinkActive="active">Contact</a>
   </nav>
 
-  <button type="button" class="menu-icon" aria-label="Open menu" (click)="menuOpen = true">
-    <i class="fa-solid fa-bars"></i>
+  <button
+    type="button"
+    class="theme-switch"
+    [class.is-light]="theme() === 'light'"
+    role="switch"
+    [attr.aria-checked]="theme() === 'dark'"
+    aria-label="Dark mode"
+    (click)="toggleTheme()"
+  >
+    <span class="knob" aria-hidden="true"></span>
+    <i class="fa-solid fa-moon" aria-hidden="true"></i>
+    <i class="fa-solid fa-sun" aria-hidden="true"></i>
   </button>
 </header>
 
-<!-- MOBILE NAV MENU -->
-<div class="mobile-menu" [class.open]="menuOpen">
-  <div class="mobile-header">
-    <a class="logo" routerLink="/" (click)="menuOpen = false">SM<b aria-hidden="true">&#9651;</b></a>
-    <button type="button" class="close" aria-label="Close menu" (click)="menuOpen = false">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-  </div>
+<!-- MOBILE BOTTOM TAB BAR -->
+<!-- Replaces the burger and slide-out drawer below 900px: every destination
+     is one tap away instead of two, and the theme switch rides along as the
+     last tab rather than being stranded in the header. -->
+<nav class="tabbar" aria-label="Main">
+  <a routerLink="/" [class.active]="homeActive()">
+    <i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span>
+  </a>
+  <a routerLink="/" fragment="about" [class.active]="aboutActive()">
+    <i class="fa-solid fa-user" aria-hidden="true"></i><span>About</span>
+  </a>
+  <a routerLink="/projects" routerLinkActive="active">
+    <i class="fa-solid fa-code" aria-hidden="true"></i><span>Projects</span>
+  </a>
+  <a routerLink="/resume" routerLinkActive="active">
+    <i class="fa-solid fa-file-lines" aria-hidden="true"></i><span>Resume</span>
+  </a>
+  <a routerLink="/contact" routerLinkActive="active">
+    <i class="fa-solid fa-envelope" aria-hidden="true"></i><span>Contact</span>
+  </a>
 
-  <nav class="mobile-nav">
-    <a routerLink="/" (click)="menuOpen = false">Home</a>
-    <a routerLink="/about" (click)="menuOpen = false">About</a>
-    <a routerLink="/projects" (click)="menuOpen = false">Projects</a>
-    <a routerLink="/resume" (click)="menuOpen = false">Resume</a>
-    <a routerLink="/contact" (click)="menuOpen = false">Contact</a>
-  </nav>
-</div>
+  <!-- A button, not a link: it changes a setting rather than going anywhere,
+       so it must not sit in the tab order as a sixth destination. -->
+  <button
+    type="button"
+    class="tab-theme"
+    role="switch"
+    [attr.aria-checked]="theme() === 'dark'"
+    aria-label="Dark mode"
+    (click)="toggleTheme()"
+  >
+    <i class="fa-solid" [class.fa-sun]="theme() === 'dark'" [class.fa-moon]="theme() === 'light'" aria-hidden="true"></i>
+    <span>{{ theme() === 'dark' ? 'Light' : 'Dark' }}</span>
+  </button>
+</nav>

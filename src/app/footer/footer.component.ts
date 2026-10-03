@@ -16,8 +16,6 @@ export class FooterComponent {
 
   readonly socials = [
     { label: 'GitHub', icon: 'fab fa-github', url: 'https://github.com/moheedshaik' },
-    { label: 'X', icon: 'fab fa-x-twitter', url: 'https://x.com' },
     { label: 'LinkedIn', icon: 'fab fa-linkedin-in', url: 'https://linkedin.com' },
-    { label: 'Instagram', icon: 'fab fa-instagram', url: 'https://instagram.com' },
   ];
 }

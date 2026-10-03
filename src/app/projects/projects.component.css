@@ -5,7 +5,8 @@
 
 .page {
   min-height: 100vh;
-  background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
+  background: var(--page-bg);
+  background-attachment: var(--page-bg-attach);
   color: var(--text);
   position: relative;
   font-family: var(--font);
@@ -61,7 +62,7 @@ h1 span {
   border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 18px 18px 22px;
-  box-shadow: 0 22px 50px -24px rgba(11, 37, 69, 0.45);
+  box-shadow: 0 22px 50px -24px rgba(var(--shadow-rgb), 0.45), var(--card-sheen);
   /* Anchors the demo link's stretched overlay below. */
   position: relative;
   transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
@@ -84,7 +85,7 @@ h1 span {
 .card-slot:hover .card {
   transform: translateY(-6px);
   border-color: var(--accent-bright);
-  box-shadow: 0 26px 54px -22px rgba(11, 37, 69, 0.55);
+  box-shadow: 0 26px 54px -22px rgba(var(--shadow-rgb), 0.55), var(--card-sheen);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -132,17 +133,17 @@ h2 {
   flex-wrap: wrap;
 }
 
-/* Navy, matching the Contact pill — the theme's one piece of heavy weight.
-   White on it is 12.4:1. */
+/* The theme's one piece of heavy weight: navy on the light page, and the
+   bright accent on the dark one — navy on navy would disappear. */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 9px;
   padding: 10px 20px;
   border-radius: 999px;
-  border: 1.5px solid var(--chrome);
-  background: var(--chrome);
-  color: var(--on-accent);
+  border: 1.5px solid var(--btn-fill);
+  background: var(--btn-fill);
+  color: var(--btn-on-fill);
   font-family: inherit;
   font-size: 14px;
   text-decoration: none;
@@ -154,12 +155,11 @@ h2 {
   opacity: 0.88;
 }
 
-/* The secondary step is solid-ish white rather than an outline: on a card
-   that is itself translucent white, a transparent button would read as a
-   floating label. Navy on it is 10.9:1. */
+/* The secondary step is a solid-ish film rather than an outline: on a card
+   that is itself translucent, a transparent button reads as a floating label. */
 .btn.ghost {
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(255, 255, 255, 0.9);
+  background: var(--btn-soft);
+  border-color: var(--btn-soft-border);
   color: var(--text);
 }
 

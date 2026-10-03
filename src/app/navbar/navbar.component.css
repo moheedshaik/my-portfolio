@@ -36,6 +36,77 @@
   margin-left: auto;
 }
 
+/* Light/dark switch: both icons always visible, with a knob that slides to
+   whichever is active. Unlike a single swapping icon, this shows the choice
+   rather than only the alternative — you can see which mode you are in. */
+.theme-switch {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  flex-shrink: 0;
+  width: 72px;
+  height: 36px;
+  margin-left: 26px;
+  padding: 0;
+  border: 1.5px solid var(--switch-edge);
+  border-radius: 999px;
+  background: var(--switch-track);
+  cursor: pointer;
+}
+
+.theme-switch .knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--switch-knob);
+  /* A white disc on a pale track tops out around 1.6:1 whatever the track —
+     so its edge is what defines it. The hairline and the drop shadow do the
+     work a colour difference cannot. */
+  border: 1px solid rgba(var(--shadow-rgb), 0.1);
+  box-shadow: 0 2px 5px -1px rgba(var(--shadow-rgb), 0.4),
+    0 1px 2px rgba(var(--shadow-rgb), 0.3);
+  box-sizing: border-box;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Knob left over the moon in dark, right over the sun in light. */
+.theme-switch.is-light .knob {
+  transform: translateX(36px);
+}
+
+/* Above the knob, so the active icon reads ON the white disc rather than
+   being covered by it. */
+.theme-switch i {
+  position: relative;
+  z-index: 1;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--switch-off-ink);
+  transition: color 0.3s ease;
+}
+
+/* Whichever icon the knob is under. One colour serves both modes because
+   the backing is the same white disc either way. */
+.theme-switch.is-light .fa-sun,
+.theme-switch:not(.is-light) .fa-moon {
+  color: var(--switch-on-ink);
+}
+
+.theme-switch:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-switch .knob {
+    transition: none;
+  }
+}
+
 .nav-item {
   position: relative;
   padding-bottom: 4px;
@@ -79,91 +150,11 @@
   border-radius: 2px;
 }
 
-/* ===== MOBILE MENU (HALF SCREEN) ===== */
-.mobile-menu {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 55vh;
-  background: var(--chrome);
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(-100%);
-  transition: transform 0.35s ease;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
-
-.mobile-menu.open {
-  transform: translateY(0);
-}
-
-.mobile-header {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mobile-nav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 22px;
-}
-
-/* Everything from here down sits on the navy --chrome panel, so it takes
-   --chrome-text. --text is navy in this theme and would vanish. */
-.mobile-menu .logo {
-  color: var(--chrome-text);
-}
-
-.mobile-nav a {
-  font-size: 21px;
-  color: var(--chrome-text);
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.mobile-nav a:hover {
-  color: var(--accent-bright);
-}
-
-.menu-icon,
-.close {
-  border: 0;
-  background: none;
-  padding: 0;
-  font-size: 26px;
-  line-height: 1;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-/* The burger is on the light page; the close button is on the navy panel. */
-.menu-icon {
-  color: var(--accent);
-}
-
-.close {
-  color: var(--chrome-text);
-}
-
-.menu-icon {
+/* ===== MOBILE BOTTOM TAB BAR ===== */
+/* Hidden by default and switched on below 900px, rather than the reverse —
+   the desktop header is the base case and this is the override. */
+.tabbar {
   display: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav-item::after {
-    transition: none;
-  }
 }
 
 @media (max-width: 900px) {
@@ -171,12 +162,73 @@
     display: none;
   }
 
-  .menu-icon {
-    display: block;
-    margin-left: auto;
+  /* The tab bar carries the switch on phones, so the header one would be a
+     second control for the same setting. */
+  .theme-switch {
+    display: none;
   }
 
   .navbar {
     padding: 0 20px;
+  }
+
+  .tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9000;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* Fixed to the token the pages reserve space with, rather than growing
+       from its content — otherwise the two drift and the bar eats the footer. */
+    height: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    background: var(--panel);
+    backdrop-filter: blur(22px);
+    border-top: 1.5px solid var(--border);
+    box-shadow: 0 -10px 30px -16px rgba(var(--shadow-rgb), 0.5);
+    /* Clears the home indicator on phones that have one; resolves to 0
+       everywhere else. */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .tabbar a,
+  .tabbar .tab-theme {
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 5px;
+    padding: 8px 2px;
+    border: 0;
+    background: none;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 0.2px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .tabbar i {
+    font-size: 17px;
+    line-height: 1;
+  }
+
+  .tabbar a.active {
+    color: var(--accent);
+  }
+
+  .tabbar a:active,
+  .tabbar .tab-theme:active {
+    color: var(--accent);
+  }
+
+  .tabbar a:focus-visible,
+  .tabbar .tab-theme:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -3px;
+    border-radius: 6px;
   }
 }

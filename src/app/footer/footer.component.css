@@ -30,67 +30,55 @@
 
 /* The readable accent step, not the bright one: the footer sits on the page
    itself, where --accent-bright is 2.4:1. */
-.footer-left span,
-.footer-center span {
+.footer-left span {
   color: var(--accent);
   font-weight: 500;
 }
 
 .footer-right {
   display: flex;
-  gap: 18px;
+  align-items: center;
+  gap: 14px;
   justify-content: flex-end;
 }
 
+/* The same brand badges as the home page, two thirds the size: these share
+   a 72px strip with the credit line, where the home page's 40px discs have
+   a section to themselves. The icon size is pinned rather than inherited,
+   so it does not shrink with the footer's fluid type on phones. */
 .footer-right a {
-  color: var(--text-muted);
-  transition: color 0.3s ease, transform 0.3s ease;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--brand);
+  color: var(--brand-ink);
+  /* The badge is the affordance; the default underline just cuts across the
+     mark. The home page's icons have always suppressed it. */
+  text-decoration: none;
+  font-size: 14px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .footer-right a:hover {
-  transform: translateY(-2px);
-}
-
-/* Each network's own colour, same as the big icons on the home page. There
-   is no circle behind these, so the colour lands on the glyph rather than
-   behind it. On the page: 15.9:1, 21:1 and 4.6:1 respectively. */
-.footer-right a[aria-label="GitHub"]:hover {
-  color: #181717;
-}
-
-.footer-right a[aria-label="X"]:hover {
-  color: #000000;
-}
-
-.footer-right a[aria-label="LinkedIn"]:hover {
-  color: #0a66c2;
-}
-
-/* Instagram has no single colour, so its gradient is clipped to the glyph.
-   It goes on the <i>, not the <a>: the icon is that element's own text, so
-   the clip has something to bite on. Trimmed to the pink-to-purple end —
-   the stock gradient's orange measures 1.9:1 here, and unlike the home-page
-   icons there is no dark circle to carry it. This range holds 3.5-5.2:1. */
-.footer-right a[aria-label="Instagram"]:hover i {
-  background: linear-gradient(45deg, #e1306c, #c13584, #833ab4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 10px 20px -8px var(--brand);
 }
 
 @media (max-width: 900px) {
   .footer {
-    /* Stacks to three rows on narrow screens, so it grows past --chrome-h. */
+    /* Stacks to two rows on narrow screens, so it grows past --chrome-h. */
     min-height: auto;
     padding: 18px 16px;
-    /* Fluid so the credit line stays on ONE line down to 320px phones. In
-       Space Grotesk it needs 284px at 13.9px, and only 288px is available
-       at 320px — so the cap is the desktop 15px and the floor covers 320. */
-    font-size: clamp(12px, 3.9vw, 15px);
+    /* Fluid so the credit line stays on ONE line down to 320px phones.
+       Measured, not guessed: the merged credit needs 267px at the 12.5px
+       floor and 288px is available at 320, so it clears by 21px. */
+    font-size: clamp(12.5px, 3.9vw, 15px);
   }
 
-  .footer-left,
-  .footer-center {
+  .footer-left {
     white-space: nowrap;
   }
 

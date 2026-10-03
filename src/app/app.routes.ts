@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ResumeComponent } from './resume/resume.component';
 import { ContactComponent } from './contact/contact.component';
@@ -8,7 +7,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'about', component: AboutComponent },
+  // About folded into Home as a section. Kept as a redirect rather than
+  // deleted so an old /about link lands on the site instead of the 404.
+  { path: 'about', redirectTo: '/', pathMatch: 'full' },
   { path: 'projects', component: ProjectsComponent },
   {
     // Lazy — the country data and this page's markup only matter if you open the demo.

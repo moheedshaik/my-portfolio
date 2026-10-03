@@ -2,41 +2,62 @@
 
   <app-navbar />
 
-  <!-- KNOW WHO I AM -->
+  <!-- LET ME INTRODUCE MYSELF -->
   <section class="know">
-    <h1>Know Who <span>I'M</span></h1>
+    <h1 class="rule">LET ME <span>INTRODUCE</span> MYSELF</h1>
 
     <div class="know-container">
       <div class="know-text">
         <p>
-          Hi everyone! I'm <span class="highlight">Shaik Moheed</span>.
-          I'm currently working as a <span class="highlight">Software Engineer</span>
-          at <span class="highlight">Certinal</span>.
+          I’m a Software Engineer who enjoys turning ideas into scalable,
+          reliable products with a strong focus on user experience. Over the
+          years, I’ve worked with multiple technologies and developed a
+          passion for building high-performance web applications.
         </p>
 
-        <p>Outside of coding, I love engaging in activities that keep me creative and inspired:</p>
+        <p>
+          I’m proficient in
+          <span class="highlight">JavaScript</span>,
+          <span class="highlight">Angular</span>,
+          <span class="highlight">Node.js</span>
+          and <span class="highlight">Java</span>
+        </p>
 
-        <ul class="hobbies">
-          @for (h of hobbies; track h.text) {
-            <li><i class="fa-solid fa-hand-point-right"></i> {{ h.text }} {{ h.emoji }}</li>
-          }
-        </ul>
+        <p>
+          My key areas of interest include developing
+          <span class="highlight">Modern Web Applications</span>,
+          improving
+          <span class="highlight">Performance</span> and
+          <span class="highlight">Usability</span>, and
+          continuously learning
+          <span class="highlight">Frontend Patterns</span> and
+          <span class="highlight">New Technologies</span>
+          to build Maintainable
+          <span class="highlight">Production-Ready Systems</span>.
+        </p>
 
-        <blockquote>
-          "Build it simple, build it solid, build it to last."
-          <cite>— Moheed</cite>
-        </blockquote>
+        <p>
+          Whenever possible, I enjoy building projects with
+          <span class="highlight">Angular</span> and
+          <span class="highlight">Node.js</span>,
+          focusing on scalable and maintainable web applications.
+        </p>
       </div>
 
-      <div class="know-image">
-        <img src="assets/images/about-monitoring.svg" alt="Monitoring application data on a dashboard">
+      <!-- Drawn arcs rather than an illustration, so it carries the page's
+           own palette instead of importing a second one. -->
+      <div class="know-image arcs" aria-hidden="true">
+        <span class="arc a1"></span>
+        <span class="arc a2"></span>
+        <span class="arc a3"></span>
+        <span class="disc"></span>
       </div>
     </div>
   </section>
 
   <!-- PROFESSIONAL SKILLSET -->
   <section class="chips-section">
-    <h2>Professional <span>Skillset</span></h2>
+    <h2 class="rule">Professional <span>Skillset</span></h2>
     <div class="chips">
       @for (s of skills; track s.name) {
         <span class="chip"><i [class]="s.icon"></i>{{ s.name }}</span>
@@ -46,7 +67,7 @@
 
   <!-- TOOLS I USE -->
   <section class="chips-section">
-    <h2>Tools <span>I use</span></h2>
+    <h2 class="rule">Tools <span>I use</span></h2>
     <div class="chips">
       @for (t of tools; track t.name) {
         <span class="chip"><i [class]="t.icon"></i>{{ t.name }}</span>

@@ -13,16 +13,30 @@ body {
 }
 
 /* ---------------------------------------------------------------
-   Theme tokens — "Arctic": icy blue field, navy type, frosted glass.
+   Theme tokens — "Arctic", in a light and a dark palette.
    Every component stylesheet reads these, so re-theming the whole
-   site means editing this block only.
+   site means editing this file only.
 
-   This is a LIGHT theme (it replaced a dark teal one). Anything added
-   later must take its background from --bg/--surface rather than
-   assuming a dark page, and must take its text from --text rather
-   than assuming white.
+   HOW THE TWO MODES SWITCH
+   The inline script in index.html always stamps data-theme on <html>
+   before first paint. DARK is the default — a first-time visitor lands
+   on it whatever their OS prefers — and only an explicit switch to
+   light is remembered.
+
+   Because the attribute is always set, the dark palette needs only ONE
+   rule, :root[data-theme="dark"], rather than a copy under the attribute
+   and another under @media (prefers-color-scheme: dark). Two copies of a
+   palette drift apart; one cannot. The cost is that with JS off the site
+   falls back to the light palette below.
+
+   ADDING ANYTHING NEW
+   Take backgrounds from --bg/--surface and text from --text. Never
+   hardcode a colour that assumes one mode: a navy shadow is invisible
+   on a navy page, and a near-white button glares on one.
 ---------------------------------------------------------------- */
 :root {
+  color-scheme: light;
+
   /* Type. Space Grotesk is loaded in index.html; the site previously asked
      for "PT Mono", which was never loaded at all and silently fell back to
      whatever monospace the machine had. */
@@ -41,21 +55,23 @@ body {
   /* Hairline rules INSIDE a glass panel, where a white border would vanish. */
   --border-ink: rgba(11, 37, 69, 0.14);
 
-  /* Chrome — the one dark surface left in the theme: the navy Contact pill
-     and the mobile menu panel. Anything sitting on it needs --chrome-text,
-     NOT --text, which is now navy and would disappear. */
-  --chrome: #0b2545;
   /* Header and footer share one height so they stay visually matched. */
   --chrome-h: 72px;
-  --chrome-text: #cfeaff;
-  --chrome-muted: #9dc2e0;
+  /* The mobile tab bar's height, used BOTH to size the bar and to reserve
+     room for it at the bottom of every page. One token, because guessing
+     the second value is how the footer ends up underneath the bar. */
+  --tabbar-h: 72px;
+
+  /* The mobile menu panel. Frosted rather than a solid slab, so it reads as
+     the page lifted forward instead of a foreign block dropped on top —
+     which is why it takes --text like everything else, not its own ink. */
+  --panel: rgba(255, 255, 255, 0.84);
 
   /* Text — navy on ice. 12.4:1 on --bg, so it is safe at any size. */
   --text-strong: #0b2545;
   --text: #0b2545;
-  /* Secondary copy. Page 22 got this with opacity:.76 on the navy; baked to
-     a flat colour here so it does not also fade the backgrounds it lands on.
-     6.3:1 on --bg, 7.0:1 on a glass card. */
+  /* Secondary copy, baked to a flat colour rather than an opacity so it does
+     not also fade the backgrounds it lands on. 6.3:1 on --bg, 7.0:1 on glass. */
   --text-muted: #3a5572;
 
   /* Accent. The design's signature blue (#2d9cdb) is only 2.4:1 on this
@@ -75,5 +91,246 @@ body {
 
   /* Foreground for anything sitting ON an accent fill. */
   --on-accent: #ffffff;
+
+  /* Shadow colour as raw channels, so each use can pick its own alpha.
+     Navy on a light page; on a dark page a navy shadow is invisible. */
+  --shadow-rgb: 11, 37, 69;
+
+  /* Filled buttons (project cards, 404). Navy here — the theme's one piece
+     of heavy weight — but navy-on-navy vanishes in dark, so this is a token
+     rather than a reuse of --chrome. */
+  --btn-fill: #0b2545;
+  --btn-on-fill: #ffffff;
+  /* The secondary step: solid-ish rather than an outline, because on a card
+     that is itself translucent a transparent button reads as a floating label. */
+  --btn-soft: rgba(255, 255, 255, 0.72);
+  --btn-soft-border: rgba(255, 255, 255, 0.9);
+
+  /* "Open to opportunities" chip. */
+  --ok: #166534;
+  --ok-bg: rgba(22, 163, 74, 0.1);
+
+  /* Focus ring on form fields. */
+  --focus-ring: rgba(21, 101, 160, 0.22);
+
+  /* ---- Social brand marks ---------------------------------------------
+     The icons wear their own brand colour at rest now, so these live here
+     rather than twice over in the home page and the footer. The -ink pair
+     is what sits ON that colour when a hover fills the circle with it. */
+  --brand-github: #181717;
+  --brand-github-ink: #ffffff;
+  --brand-linkedin: #0a66c2;
+
+  /* ---- Light/dark switch ---------------------------------------------
+     The knob is a white disc in BOTH modes, so the icon sitting on it
+     takes one colour in both — teal reads as a sun and holds 5.4:1 on
+     white. Only the track, its edge and the unlit icon change by mode. */
+  /* An ink film, not a white one. A white track put the white knob at 1.1:1
+     against it — you could not see which side the knob was on. */
+  --switch-track: rgba(11, 37, 69, 0.13);
+  --switch-edge: rgba(11, 37, 69, 0.16);
+  --switch-knob: #ffffff;
+  --switch-on-ink: #0e6e68;
+  --switch-off-ink: #566b82;
+
+  /* ---- Backdrop ------------------------------------------------------
+     The whole page background as one value, so all six pages share a
+     single definition instead of each re-declaring the gradient stack.
+
+     Light stays the plain ice-blue sweep it has always been. The colour
+     blooms are a dark-mode device only: on black they read as ambient
+     light, on a pale page they read as a stain. */
+  --page-bg: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
+  /* Scroll, matching the original: the sweep is anchored to the page, not
+     the viewport. Dark overrides this, because blooms pinned to the
+     viewport are what makes them read as light in a room. */
+  --page-bg-attach: scroll;
+
+  /* Catches light along a card's top edge, the way a real raised surface
+     would. One inset hairline reads as bevel where a plain border reads
+     as an outline. */
+  --card-sheen: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+  /* ---- Illustration fills -------------------------------------------
+     The two hero SVGs are inlined into their templates so they can read
+     these. As external <img> files they could not: an img-loaded SVG
+     cannot see the host page's data-theme, only the OS setting, so the
+     toggle would have left them stranded in the wrong mode. */
+  --illus-wall: #a3c6e4;
+  --illus-floor: #dcecf9;
+  --illus-panel: #bcd8ef;
+  --illus-desk: #6f99bb;
+  --illus-bezel: #ffffff;
+  --illus-stand: #dde7f1;
+  --illus-steam: #9ec2e2;
+  --illus-mug: #e4f4ee;
+  --illus-mug-liquid: #7fbcae;
+  /* The mug carries an outline because a pale cup on a pale page has no
+     contrast of its own to rely on — 1.08:1 for the body, 4.4:1 for this. */
+  --illus-mug-edge: #3f7488;
+  /* Screens stay dark in both modes — they are lit displays, not surfaces. */
+  --illus-screen: #1e232e;
+  --illus-screen-line: #2b3140;
+  --illus-screen-dim: #39414f;
+  --illus-screen-mid: #55607a;
 }
 
+/* ---------------------------------------------------------------
+   Section heading rule. A short bar under the heading rather than a
+   full-width divider: it marks where a section starts without drawing
+   a line across the page and chopping it into boxes.
+
+   Global, because the six pages each style their own headings and this
+   is one shape they should share. Centred headings get a centred bar.
+---------------------------------------------------------------- */
+.rule::after {
+  content: "";
+  display: block;
+  width: 62px;
+  height: 4px;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.rule:not(.rule-left)::after {
+  margin-inline: auto;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+
+@media (max-width: 900px) {
+  .rule::after {
+    width: 48px;
+    height: 3px;
+    margin-top: 10px;
+  }
+
+  /* Room for the fixed bottom tab bar. Without this it covers the footer,
+     which is the one part of the page you can never scroll past. */
+  .page {
+    padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Near-black, not a dark tint of the brand blue. A navy page reads as
+     "the background colour changed"; a true dark mode needs the page to
+     get out of the way so the content is the only thing lit. */
+  --bg: #0a0a0c;
+  /* Barely a lift — just enough for the corner gradient to register as a
+     glow rather than a second colour. */
+  --bg-glow: #16171d;
+  /* Glass inverts: a white film at low alpha lifts off the black rather than
+     covering it. .52 white here would be a solid panel. */
+  --surface: rgba(255, 255, 255, 0.045);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-ink: rgba(255, 255, 255, 0.12);
+
+  --panel: rgba(18, 18, 22, 0.86);
+
+  --text-strong: #ffffff;
+  --text: #f2f3f5;
+  /* Neutral grey rather than a blue-grey: on a neutral page a tinted muted
+     step reads as a colour cast across all the secondary copy. */
+  --text-muted: #9a9ca3;
+
+  /* The accent brightens rather than darkens: on navy it is the light step
+     that carries contrast, the mirror of the light theme. */
+  --accent: #5ab4e8;
+  --accent-text: #5ab4e8;
+  --accent-bright: #7cc8f5;
+  --accent-soft: #5ab4e8;
+  /* Social glyphs sit on dark glass here, so they need a light fill. */
+  --accent-deep: #f2f3f5;
+  --grad-from: #1f6f9e;
+  --grad-to: #5ab4e8;
+  /* Dark ink on a bright fill, inverted from the light theme's white. */
+  --on-accent: #07080a;
+
+  --shadow-rgb: 0, 0, 0;
+
+  --btn-fill: #5ab4e8;
+  --btn-on-fill: #07080a;
+  --btn-soft: rgba(255, 255, 255, 0.1);
+  --btn-soft-border: rgba(255, 255, 255, 0.18);
+
+  --ok: #5ce296;
+  --ok-bg: rgba(92, 226, 150, 0.12);
+
+  --focus-ring: rgba(90, 180, 232, 0.35);
+
+  /* GitHub's badge is near-black, and a near-black disc on a near-black page
+     has no edge — the mark would read as floating. This is GitHub's own dark
+     surface colour, so the badge keeps its shape without changing brand.
+     LinkedIn's blue carries on both grounds, so it does not shift. */
+  --brand-github: #24292f;
+
+  /* Track darkens and its edge flips to a light hairline; the knob and the
+     ink on it stay as they are, since that disc is white in both modes. */
+  --switch-track: rgba(255, 255, 255, 0.07);
+  --switch-edge: rgba(255, 255, 255, 0.16);
+  --switch-off-ink: #8d919a;
+
+  /* Three soft colour blooms behind the content — the thing that stops a
+     black page reading as a flat void. Low alpha deliberately: stronger
+     and they stop being atmosphere and start competing with the content. */
+  --glow-a: rgba(255, 72, 66, 0.16);
+  --glow-b: rgba(40, 220, 150, 0.1);
+  --glow-c: rgba(126, 86, 255, 0.17);
+
+  --page-bg: radial-gradient(60vw 46vw at 88% 6%, var(--glow-a), transparent 62%),
+    radial-gradient(52vw 42vw at 2% 54%, var(--glow-b), transparent 62%),
+    radial-gradient(48vw 40vw at 78% 96%, var(--glow-c), transparent 62%),
+    radial-gradient(circle at top right, var(--bg-glow), var(--bg));
+  /* Viewport-anchored, so the blooms sit still as you scroll rather than
+     sliding off the bottom of a very tall page. */
+  --page-bg-attach: fixed;
+
+  /* A white hairline would be a glare on black; this is barely there. */
+  --card-sheen: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+  /* Illustration: the room at night, in the page's own neutral rather than a
+     blue one — a blue room on a black page is the tint problem again, just
+     inside the artwork. The person and the screens keep their colours, so
+     the figure stays the focal point in both modes.
+
+     Figure and ground, not one flat brightness. The window wall is the
+     biggest shape in the frame, so lifting it as far as the furniture made
+     it compete with the person — a grey slab louder than the subject. The
+     background shapes sit back near the page; the objects on the desk carry
+     the visibility. (Dimming EVERYTHING was the earlier mistake, and the
+     fix is not to raise everything but to spread the two apart.)
+
+     Within each group the lightness order mirrors the light palette
+     inverted, so the artwork keeps its own internal logic. */
+
+  /* Ground — large, far, barely there. */
+  --illus-wall: #242a34;
+  --illus-panel: #1f242d;
+  --illus-floor: #1b1f27;
+
+  /* Figure — the desk and what stands on it, where the eye should land. */
+  --illus-desk: #46505f;
+  --illus-stand: #3a4350;
+  --illus-bezel: #5c6678;
+  --illus-steam: #78839a;
+  --illus-mug: #3e4e4a;
+  --illus-mug-liquid: #58a195;
+  --illus-mug-edge: #8ec3b6;
+}
+
+/* Maps each network to the pair its badge is built from — the fill and the
+   mark that sits on it. Global and keyed off aria-label so the home page and
+   the footer share one mapping rather than each repeating the brand names;
+   it only declares variables, so it paints nothing on its own. */
+a[aria-label='GitHub'] {
+  --brand: var(--brand-github);
+  --brand-ink: var(--brand-github-ink);
+}
+
+a[aria-label='LinkedIn'] {
+  --brand: var(--brand-linkedin);
+  --brand-ink: #ffffff;
+}

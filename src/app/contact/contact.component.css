@@ -2,7 +2,8 @@
 
 .page {
   min-height: 100vh;
-  background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
+  background: var(--page-bg);
+  background-attachment: var(--page-bg-attach);
   color: var(--text);
   position: relative;
   font-family: var(--font);
@@ -50,6 +51,7 @@ h2 {
   border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 30px 28px;
+  box-shadow: 0 22px 50px -24px rgba(var(--shadow-rgb), 0.45), var(--card-sheen);
 }
 
 .row {
@@ -102,14 +104,14 @@ h2 {
   margin-top: 22px;
   padding: 9px 16px;
   border-radius: 999px;
-  background: rgba(22, 163, 74, 0.1);
+  background: var(--ok-bg);
   /* Darkened from #16a34a, which was only 2.4:1 once the chip's backing
      went from dark teal to a pale tint of green over ice blue. */
-  color: #166534;
+  color: var(--ok);
   font-size: 14px;
 }
 
-.status i { width: 8px; height: 8px; border-radius: 50%; background: #166534; }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
 
 /* ===== FORM ===== */
 .form label { display: block; margin-bottom: 18px; }
@@ -144,7 +146,7 @@ h2 {
 .form input:focus, .form textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(21, 101, 160, 0.22);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .form button {
@@ -164,7 +166,7 @@ h2 {
 
 .form button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(11, 37, 69, 0.32);
+  box-shadow: 0 10px 24px rgba(var(--shadow-rgb), 0.32);
 }
 
 .note { margin: 14px 0 0; font-size: 13px; color: var(--text-muted); }

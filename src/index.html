@@ -7,9 +7,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Shaik Moheed — Software Engineer building scalable, reliable web applications with Angular, Java and Node.js.">
   <meta name="author" content="Shaik Moheed">
-  <meta name="theme-color" content="#2b2621">
+  <!-- Matches the default below, and ThemeService rewrites it on toggle so
+       the browser's own chrome keeps up. Not split by prefers-color-scheme
+       any more: the site no longer follows the OS. -->
+  <meta name="theme-color" content="#0a0a0c">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Stamps the theme before first paint. This must be inline and in <head>:
+       deferred to the Angular bundle it would run after the browser has already
+       painted, so every load would start with a white flash before going dark.
+
+       Dark is the default a first-time visitor lands on, regardless of what
+       their OS prefers — the site is designed dark-first and the switch is
+       right there in the header. Only an explicit choice to go light is
+       honoured, and it is remembered from then on.
+
+       Always sets the attribute, so styles.css needs one dark palette rather
+       than a copy under [data-theme] and another under a media query. -->
+  <script>
+    (function () {
+      var light = false;
+      try {
+        light = localStorage.getItem('theme') === 'light';
+      } catch (e) {
+        /* Private mode can throw on localStorage; fall through to the default. */
+      }
+      document.documentElement.setAttribute('data-theme', light ? 'light' : 'dark');
+    })();
+  </script>
 
   <!-- Social cards: without these, shared links render as a blank grey box. -->
   <meta property="og:type" content="website">

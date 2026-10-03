@@ -18,28 +18,29 @@
   </div>
 
   <div class="hero-right">
-    <img src="assets/images/dev-illustration.svg" alt="Developer illustration">
+    <app-dev-illustration aria-label="Developer at a desk writing code" role="img" />
   </div>
 </section>
 
- <!-- ABOUT SECTION -->
-
-
  <div>
 
-<section class="about-section">
-  <div class="about-container">
-    <!-- LEFT CONTENT -->
-    <div class="about-text">
-      <h2>
-        LET ME <span>INTRODUCE</span> MYSELF
-      </h2>
+<!-- ABOUT — the id is what the nav's About link scrolls to. -->
+<section class="know" id="about">
+  <h1 class="rule">LET ME <span>INTRODUCE</span> MYSELF</h1>
+
+  <div class="know-container">
+    <div class="know-text">
+      <p>
+        Hi everyone! I’m <span class="highlight">Shaik Moheed</span>.
+        I’m currently working as a <span class="highlight">Software Engineer</span>
+        at <span class="highlight">Certinal</span>.
+      </p>
 
       <p>
-        I’m a Software Engineer who enjoys turning ideas into scalable,
-        reliable products with a strong focus on user experience. Over the years, I’ve worked with multiple technologies
-        and
-        developed a passion for building high-performance web applications.
+        I enjoy turning ideas into scalable, reliable products with a strong
+        focus on user experience. Over the years, I’ve worked with multiple
+        technologies and developed a passion for building high-performance
+        web applications.
       </p>
 
       <p>
@@ -69,35 +70,33 @@
         <span class="highlight">Node.js</span>,
         focusing on scalable and maintainable web applications.
       </p>
-
-
-
-      
-
-
-
-
-
-
     </div>
-    <!-- RIGHT: drawn arcs rather than an illustration, so it carries the
-         page's own palette instead of importing a second one. -->
-    <div class="about-image" aria-hidden="true">
-      <span class="arc a1"></span>
-      <span class="arc a2"></span>
-      <span class="arc a3"></span>
-      <span class="disc"></span>
-    </div>
+  </div>
+</section>
 
+<!-- PROFESSIONAL SKILLSET -->
+<section class="chips-section">
+  <h2 class="rule">Professional <span>Skillset</span></h2>
+  <div class="chips">
+    @for (s of skills; track s.name) {
+      <span class="chip"><i [class]="s.icon"></i>{{ s.name }}</span>
+    }
+  </div>
+</section>
 
-
-
+<!-- TOOLS I USE -->
+<section class="chips-section">
+  <h2 class="rule">Tools <span>I use</span></h2>
+  <div class="chips">
+    @for (t of tools; track t.name) {
+      <span class="chip"><i [class]="t.icon"></i>{{ t.name }}</span>
+    }
   </div>
 </section>
 
 <!-- CONNECT SECTION — full width, its own screen -->
 <section class="connect-full">
-  <h2>Find Me On</h2>
+  <h2 class="rule">Find Me On</h2>
   <p>
   Feel free to <span class="highlight">connect</span> with me.
   </p>
@@ -105,14 +104,8 @@
   <a href="https://github.com/moheedshaik" target="_blank" rel="noopener" aria-label="GitHub">
     <i class="fab fa-github"></i>
   </a>
-  <a href="https://x.com" target="_blank" rel="noopener" aria-label="X">
-    <i class="fab fa-x-twitter"></i>
-  </a>
   <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
     <i class="fab fa-linkedin-in"></i>
-  </a>
-  <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
-    <i class="fab fa-instagram"></i>
   </a>
   </div>
 </section>

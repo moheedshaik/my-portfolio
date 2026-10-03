@@ -10,13 +10,6 @@ import { FooterComponent } from '../footer/footer.component';
   styleUrls: ['./about.component.css'],
 })
 export class AboutComponent {
-  readonly hobbies = [
-    { text: 'Playing Games', emoji: '🎮' },
-    { text: 'Traveling and Exploring New Places', emoji: '🌍' },
-    { text: 'Playing Cricket', emoji: '🏏' },
-    { text: 'Watching Movies', emoji: '🎬' },
-  ];
-
   /** `icon` values are devicon classes (see index.html). */
   readonly skills = [
     { name: 'JavaScript', icon: 'devicon-javascript-plain colored' },
