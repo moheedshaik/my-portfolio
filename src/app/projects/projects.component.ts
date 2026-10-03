@@ -26,22 +26,22 @@ export class ProjectsComponent {
       demo: '/projects/countries',
     },
     {
-      name: 'Consent Manager',
-      stack: 'Angular · Java · PostgreSQL',
+      name: 'Ledger',
+      stack: 'Java · Spring Boot · PostgreSQL',
       tint: '#e8920c',
       layout: 'dashboard',
       description:
-        'Consent management platform for capturing and tracking user permissions. Supports versioned purposes, audit trails and multi-tenant reporting.',
+        'Personal finance tracker with monthly budgets and category breakdowns. Spring Boot REST API over PostgreSQL, with Flyway migrations and a charted Angular dashboard on top.',
       github: 'https://github.com/moheedshaik',
       demo: '',
     },
     {
-      name: 'Notice Registry',
-      stack: 'Angular · Node.js',
+      name: 'Scribe',
+      stack: 'Angular · IndexedDB',
       tint: '#0891b2',
       layout: 'editor',
       description:
-        'Registry for building and publishing privacy notices. Includes a rich-text editor, live preview and an embeddable snippet generator.',
+        'Offline-first markdown notebook. Writes straight to IndexedDB so it keeps working with no connection, with live preview, full-text search and export to file.',
       github: 'https://github.com/moheedshaik',
       demo: 'https://example.com',
     },

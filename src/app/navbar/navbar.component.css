@@ -1,61 +1,82 @@
-/* Moved verbatim from home.component.css when the navbar was extracted. */
+/* The header paints nothing and does not stick. Both matter: the page behind
+   it is a radial gradient, so any flat fill of its own — even the exact --bg
+   colour — shows as a seam where the two meet. Transparent lets the page's
+   own gradient run straight through, and static keeps content from sliding
+   under a see-through bar. */
 
 .navbar {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 20;
   display: flex;
   align-items: center;
+  gap: 24px;
   min-height: var(--chrome-h);
   box-sizing: border-box;
-  padding: 0 60px;
-  backdrop-filter: blur(10px);
-  background: var(--chrome-glass);
-  border-bottom: 1px solid rgba(240, 233, 220, 0.12);
-}
-
-/* push nav + button to the right */
-.nav-links {
-  display: flex;
-  gap: 40px;
-  margin-left: auto;
-  font-size: 20px;
+  padding: 0 44px;
+  background: transparent;
 }
 
 .logo {
-  font-size: 26px;
-  font-weight: bold;
-  color: var(--accent-soft);
-  margin-left: 59px;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* The bright blue is 2.4:1 on the page — too low for body text, but this is
+   a logotype, which WCAG exempts, and it is the mark's whole character. */
+.logo b {
+  color: var(--accent-bright);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  margin-left: auto;
 }
 
 .nav-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  color: var(--chrome-text);
-  text-decoration: none;
   position: relative;
-  padding-bottom: 6px;
+  padding-bottom: 4px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  opacity: 0.86;
   cursor: pointer;
 }
 
+.nav-item:hover,
+.nav-item.active {
+  opacity: 1;
+}
+
+/* Marks the CURRENT page only — hovering another link must not draw a second
+   bar, or two items look active at once. Hover is signalled by opacity above.
+   The rule draws in from the left rather than growing from the centre, so it
+   tracks the word instead of needing a fixed width per label. */
 .nav-item::after {
   content: "";
   position: absolute;
+  left: 0;
+  right: 0;
   bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 3px;
-  background: var(--accent-soft);
-  transform: translateX(-50%);
-  transition: width 0.25s ease;
-  cursor: pointer;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
 }
 
-.nav-item:hover::after,
 .nav-item.active::after {
-  width: 88px;
+  transform: scaleX(1);
+}
+
+.nav-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 /* ===== MOBILE MENU (HALF SCREEN) ===== */
@@ -98,32 +119,51 @@
   gap: 22px;
 }
 
+/* Everything from here down sits on the navy --chrome panel, so it takes
+   --chrome-text. --text is navy in this theme and would vanish. */
+.mobile-menu .logo {
+  color: var(--chrome-text);
+}
+
 .mobile-nav a {
-  font-size: 22px;
+  font-size: 21px;
   color: var(--chrome-text);
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 14px;
   cursor: pointer;
 }
 
-.mobile-nav i {
-  font-size: 20px;
-  color: var(--accent-soft);
+.mobile-nav a:hover {
+  color: var(--accent-bright);
+}
+
+.menu-icon,
+.close {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* The burger is on the light page; the close button is on the navy panel. */
+.menu-icon {
+  color: var(--accent);
 }
 
 .close {
-  font-size: 28px;
-  cursor: pointer;
-  color: var(--accent-soft);
+  color: var(--chrome-text);
 }
 
 .menu-icon {
   display: none;
-  font-size: 26px;
-  cursor: pointer;
-  color: var(--accent-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-item::after {
+    transition: none;
+  }
 }
 
 @media (max-width: 900px) {
@@ -138,9 +178,5 @@
 
   .navbar {
     padding: 0 20px;
-  }
-
-  .logo {
-    margin-left: 0;
   }
 }

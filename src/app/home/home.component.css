@@ -7,19 +7,6 @@
   position: relative;
 }
 
-/* DOTS */
-.page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-
-
 /* HERO (fills screen so background shows) */
 
 .hero {
@@ -31,7 +18,7 @@
   align-items: center;
   padding: 0 189px;
   font-size: 2.4em !important;
-  font-family: PT Mono, monospace !important
+  font-family: var(--font);
 }
 
 
@@ -108,7 +95,7 @@
     display: flex;
     align-items: center;
     padding: 90px 100px;
-    font-family: PT Mono, monospace !important;
+    font-family: var(--font);
   }
 
   .about-container {
@@ -157,16 +144,62 @@
   /* RIGHT IMAGE */
   .about-image {
     flex: 0 0 30%;
-    display: flex;
-    justify-content: center;
+    position: relative;
+    /* Arcs are absolutely placed, so the box needs its own height. */
+    height: 330px;
   }
 
-  .about-image img {
-    width: 100%;
-    max-width: 320px;
+  /* Three-quarter rings: a circle with two of its four borders made
+     transparent, then rotated to point the gap where it is wanted. */
+  .arc {
+    position: absolute;
     border-radius: 50%;
-    padding: 12px;
-    background: radial-gradient(circle, var(--grad-from), var(--grad-dark));
+    border: 20px solid var(--accent);
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+
+  /* Sized for this column, not page 9's. Rotation inflates the bounding box
+     by about 1.37×, so a 300px ring needs ~410px of width — more than the
+     30% column has. These fit without clipping. */
+  .a1 {
+    width: 190px;
+    height: 190px;
+    top: 44px;
+    left: 12%;
+    transform: rotate(-30deg);
+  }
+
+  .a2 {
+    width: 140px;
+    height: 140px;
+    top: 118px;
+    left: 36%;
+    transform: rotate(60deg);
+    border-color: var(--accent-soft);
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+
+  .a3 {
+    width: 100px;
+    height: 100px;
+    top: 22px;
+    right: 10%;
+    transform: rotate(150deg);
+    border-color: var(--text);
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+  }
+
+  .disc {
+    position: absolute;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    bottom: 54px;
+    left: 14%;
   }
 
 
@@ -184,7 +217,7 @@
   padding: 90px 20px 110px;
   box-sizing: border-box;
   /* Was inherited from .about-section before this block was lifted out. */
-  font-family: "PT Mono", monospace;
+  font-family: var(--font);
 }
 
 .connect-full h2 {
@@ -219,9 +252,38 @@
 }
 
 .social-icons a:hover {
-  background: var(--accent-deep);
-  color: #ffffff;
+  color: #fff;
   transform: translateY(-5px);
+}
+
+/* Each network's own colour on hover, keyed off aria-label so the markup
+   needs no extra classes. White on all four: 15.9:1 on GitHub, 21:1 on X,
+   5.7:1 on LinkedIn, and 3.1:1 at the weakest point of the Instagram
+   gradient — above the 3:1 bar that applies to an icon as a graphic. */
+.social-icons a[aria-label="GitHub"]:hover {
+  background: #181717;
+}
+
+.social-icons a[aria-label="X"]:hover {
+  background: #000000;
+}
+
+.social-icons a[aria-label="LinkedIn"]:hover {
+  background: #0a66c2;
+}
+
+/* Instagram has no single brand colour; this is its stock corner gradient.
+   A gradient can't be interpolated from a flat colour, so this background
+   snaps where the other three fade — the lift still animates either way. */
+.social-icons a[aria-label="Instagram"]:hover {
+  background: radial-gradient(
+    circle at 30% 107%,
+    #fdf497 0%,
+    #fdf497 5%,
+    #fd5949 45%,
+    #d6249f 60%,
+    #285aeb 90%
+  );
 }
 
 
@@ -312,9 +374,6 @@
 }
 
 
-  .about-image img {
-    width: 200px;
-  }
 
   /* ---------- CONNECT SECTION ---------- */
   .connect-full {
@@ -334,6 +393,7 @@
   order: 1;
 }
 
+ /* Hidden on phones, as the illustration it replaced was. */
  .about-image {
     display: none;
   }

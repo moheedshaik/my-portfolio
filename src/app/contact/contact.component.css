@@ -5,20 +5,8 @@
   background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
   color: var(--text);
   position: relative;
-  font-family: "PT Mono", monospace;
+  font-family: var(--font);
 }
-
-.page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-.page > * { position: relative; }
 
 .contact { padding: 70px 100px 90px; text-align: center; }
 
@@ -58,6 +46,7 @@ h2 {
 /* ===== DETAILS ===== */
 .details, .form {
   background: var(--surface);
+  backdrop-filter: blur(16px);
   border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 30px 28px;
@@ -68,7 +57,9 @@ h2 {
   align-items: center;
   gap: 16px;
   padding: 13px 0;
-  border-bottom: 1px solid var(--border);
+  /* Ink, not --border: this rule sits INSIDE a white glass card, where the
+     white card outline colour would be invisible. */
+  border-bottom: 1px solid var(--border-ink);
 }
 
 .row:last-of-type { border-bottom: none; }
@@ -81,7 +72,7 @@ h2 {
   flex-shrink: 0;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--grad-from), var(--grad-to));
-  color: #fff;
+  color: var(--on-accent);
   font-size: 16px;
 }
 
@@ -112,11 +103,13 @@ h2 {
   padding: 9px 16px;
   border-radius: 999px;
   background: rgba(22, 163, 74, 0.1);
-  color: #16a34a;
+  /* Darkened from #16a34a, which was only 2.4:1 once the chip's backing
+     went from dark teal to a pale tint of green over ice blue. */
+  color: #166534;
   font-size: 14px;
 }
 
-.status i { width: 8px; height: 8px; border-radius: 50%; background: #16a34a; }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: #166534; }
 
 /* ===== FORM ===== */
 .form label { display: block; margin-bottom: 18px; }
@@ -132,7 +125,7 @@ h2 {
   width: 100%;
   box-sizing: border-box;
   padding: 13px 16px;
-  border: 1.5px solid var(--border);
+  border: 1.5px solid var(--border-ink);
   border-radius: 12px;
   background: var(--bg);
   color: var(--text);
@@ -141,15 +134,17 @@ h2 {
   resize: vertical;
 }
 
+/* Full strength: --text-muted is already the dimmed step, and fading it
+   further dropped the placeholder to 3.3:1 on the ice-blue field. */
 .form input::placeholder, .form textarea::placeholder {
   color: var(--text-muted);
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .form input:focus, .form textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(189, 106, 7, 0.14);
+  box-shadow: 0 0 0 3px rgba(21, 101, 160, 0.22);
 }
 
 .form button {
@@ -160,7 +155,7 @@ h2 {
   border: none;
   border-radius: 999px;
   background: linear-gradient(135deg, var(--grad-from), var(--grad-to));
-  color: #fff;
+  color: var(--on-accent);
   font-family: inherit;
   font-size: 16px;
   cursor: pointer;
@@ -169,7 +164,7 @@ h2 {
 
 .form button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(189, 106, 7, 0.32);
+  box-shadow: 0 10px 24px rgba(11, 37, 69, 0.32);
 }
 
 .note { margin: 14px 0 0; font-size: 13px; color: var(--text-muted); }

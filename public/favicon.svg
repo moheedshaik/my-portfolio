@@ -1,6 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="14" fill="#2b2621"/>
-  <text x="32" y="43" text-anchor="middle"
-        font-family="ui-monospace, 'SF Mono', Menlo, monospace"
-        font-size="30" font-weight="700" fill="#e8920c">SM</text>
+  <!-- Just the SM monogram, no plate behind it, so it sits straight on the
+       browser's own tab strip. That strip can be light or dark, which rules
+       out the navy of the wordmark (1.5:1 on a dark tab, i.e. invisible);
+       the bright blue holds 4.0:1 on dark chrome and 3.1:1 on white.
+       A system font stack — a favicon renders without the page's webfonts. -->
+  <text x="32" y="46" text-anchor="middle"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="38" font-weight="700" letter-spacing="-1.5" fill="#2d9cdb">SM</text>
 </svg>

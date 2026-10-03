@@ -9,53 +9,71 @@ body {
   padding: 0;
   min-height: 100%;
   background: var(--bg);
-  font-family: "Segoe UI", sans-serif;
+  font-family: var(--font);
 }
 
 /* ---------------------------------------------------------------
-   Theme tokens — warm cream + amber (bright).
+   Theme tokens — "Arctic": icy blue field, navy type, frosted glass.
    Every component stylesheet reads these, so re-theming the whole
    site means editing this block only.
 
-   Text colour rule: body copy is near-black, NOT brown. On a cream
-   page a brown body text has nothing to contrast against and reads
-   muddy — amber earns its brightness by being the only warm colour,
-   so it is reserved for accents.
+   This is a LIGHT theme (it replaced a dark teal one). Anything added
+   later must take its background from --bg/--surface rather than
+   assuming a dark page, and must take its text from --text rather
+   than assuming white.
 ---------------------------------------------------------------- */
 :root {
-  /* Surfaces */
-  --bg: #fffbf0;
-  --bg-glow: #fdeccb;
-  --bg-glass: rgba(255, 251, 240, 0.78);
-  --surface: #ffffff;
-  --border: rgba(43, 38, 33, 0.14);
-  /* Dot pattern overlay — a tint, not a speck, on cream. */
-  --dots: #eeddb4;
+  /* Type. Space Grotesk is loaded in index.html; the site previously asked
+     for "PT Mono", which was never loaded at all and silently fell back to
+     whatever monospace the machine had. */
+  --font: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
 
-  /* Chrome — header and footer. A deliberately different surface from the
-     cream body, so they read as distinct bands instead of blending in. */
-  --chrome: #2b2621;
+  /* Surfaces */
+  --bg: #cfeaff;
+  /* Lifts the top-right corner of the page gradient. */
+  --bg-glow: #e8f5ff;
+  /* Cards are frosted glass, not a solid fill: the white is translucent so
+     the page gradient shows through it. Pair it with backdrop-filter
+     wherever a card is large enough for the blur to read. */
+  --surface: rgba(255, 255, 255, 0.52);
+  --border: rgba(255, 255, 255, 0.9);
+  /* Hairline rules INSIDE a glass panel, where a white border would vanish. */
+  --border-ink: rgba(11, 37, 69, 0.14);
+
+  /* Chrome — the one dark surface left in the theme: the navy Contact pill
+     and the mobile menu panel. Anything sitting on it needs --chrome-text,
+     NOT --text, which is now navy and would disappear. */
+  --chrome: #0b2545;
   /* Header and footer share one height so they stay visually matched. */
   --chrome-h: 72px;
-  --chrome-glass: rgba(43, 38, 33, 0.92);
-  --chrome-text: #f0e9dc;
-  --chrome-muted: #b9ad99;
+  --chrome-text: #cfeaff;
+  --chrome-muted: #9dc2e0;
 
-  /* Text — warm-tinted neutrals, so they sit on cream without
-     going cold, while keeping real contrast. */
-  --text-strong: #1c1815; /* 17:1 on --bg */
-  --text: #2b2621; /* 14.5:1 — body copy */
-  --text-muted: #6f6459; /* 5.6:1 — secondary copy */
+  /* Text — navy on ice. 12.4:1 on --bg, so it is safe at any size. */
+  --text-strong: #0b2545;
+  --text: #0b2545;
+  /* Secondary copy. Page 22 got this with opacity:.76 on the navy; baked to
+     a flat colour here so it does not also fade the backgrounds it lands on.
+     6.3:1 on --bg, 7.0:1 on a glass card. */
+  --text-muted: #3a5572;
 
-  /* Accent. Two amber steps, chosen by TEXT SIZE:
-     --accent      bright, 3.4:1 — large headings, icons, rules only
-     --accent-text deeper, 4.9:1 — inline highlights and small links
-     Using --accent for 14–16px text fails contrast on cream. */
-  --accent: #c9740a;
-  --accent-text: #a55c05;
-  --accent-soft: #e8920c;
-  --accent-deep: #8a4d06;
-  --grad-from: #f59e0b;
-  --grad-to: #fbbf24;
-  --grad-dark: #fde8b0;
+  /* Accent. The design's signature blue (#2d9cdb) is only 2.4:1 on this
+     page — it fails even the 3:1 large-text bar — so it is decoration only
+     and lives in --accent-bright. Everything that has to be READ uses the
+     darker step, which is 5.0:1 on the page and 5.6:1 on a card. */
+  --accent: #1565a0;
+  --accent-text: #1565a0;
+  --accent-bright: #2d9cdb;
+  /* Shapes only (arcs, discs) — never text. */
+  --accent-soft: #2d9cdb;
+  --accent-deep: #0b2545;
+  /* Navy → blue, so white stays readable across the whole sweep
+     (12.4:1 at the dark end, 6.2:1 at the light end). */
+  --grad-from: #0b2545;
+  --grad-to: #1565a0;
+
+  /* Foreground for anything sitting ON an accent fill. */
+  --on-accent: #ffffff;
 }
+

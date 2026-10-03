@@ -5,20 +5,8 @@
   background: radial-gradient(circle at top right, var(--bg-glow), var(--bg));
   color: var(--text);
   position: relative;
-  font-family: "PT Mono", monospace;
+  font-family: var(--font);
 }
-
-.page::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-.page > * { position: relative; }
 
 .nf {
   flex: 1;
@@ -66,12 +54,12 @@ h1 span { color: var(--accent); }
   border-radius: 999px;
   border: 1.5px solid var(--accent);
   background: linear-gradient(135deg, var(--grad-from), var(--grad-to));
-  color: #fff;
+  color: var(--on-accent);
   font-family: inherit;
   font-size: 15px;
   text-decoration: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(189, 106, 7, 0.3); }
-.btn.ghost { background: transparent; color: var(--accent-text); }
+.btn:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(11, 37, 69, 0.3); }
+.btn.ghost { background: rgba(255, 255, 255, 0.72); color: var(--text); }
